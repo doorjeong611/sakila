@@ -17,9 +17,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 <meta charset="UTF-8">
-<title> hello </title>
+<title>main</title>
 </head>
-<body>
-	<h1>hello</h1>
+<body class= "container">
+	<h1>main</h1>
 </body>
 </html>

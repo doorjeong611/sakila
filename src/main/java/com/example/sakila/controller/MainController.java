@@ -7,14 +7,16 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-public class Hello {
+public class MainController {
 
-		@GetMapping("/hello")
-		public String hello() {
-			// logging 프레임워크 사용.
-			log.debug("ㅎㅎ");
-			
-			return "hello";
-		}
+	@GetMapping("/on/main")
+	public String main() {
+		return "on/main";
+	}
+	
+	
+	
+	
+	
 	
 }
