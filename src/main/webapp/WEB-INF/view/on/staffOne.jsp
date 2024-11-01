@@ -17,14 +17,10 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 <meta charset="UTF-8">
-<title>main</title>
+<title>staffOne</title>
 
 <script>
 	$(document).ready(function(){ // <body>까지 메모리에 올라간 후 script 실행.
-		
-		
-		
-		
 	})
 </script>
 
@@ -41,7 +37,7 @@
 		
 		<!-- main -->
 		<div class="col-sm-10">
-			<p class="h1">main</p>
+			<p class="h1">STAFF ONE</p>
 		</div>
 	</div>
 </body>

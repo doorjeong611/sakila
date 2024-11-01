@@ -17,9 +17,13 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class LoginController {
 	
-	@Autowired
-	private StaffMapper staffMapper; // staffMapper는 인터페이스이므로 객체생성 불가 이의 자식의 객체가 스프링 빈에 들어가있음 (다형성)
+	/** Autowired **/
+	// staffMapper는 인터페이스이므로 객체생성 불가 이의 자식의 객체가 스프링 빈에 들어가있음 (다형성)
+	@Autowired StaffMapper staffMapper; // private해도 됨. 하지만 편하게 사용하기 위해 default로 설정함.
 	
+	
+	
+
 	// 로그인 폼으로 이동
 	@GetMapping("/off/login")
 	public String login() {
@@ -29,7 +33,6 @@ public class LoginController {
 		return "off/login";
 		
 	}
-	
 	
 	// 로그인 액션
 	@PostMapping("/off/login")
@@ -56,6 +59,20 @@ public class LoginController {
 		
 		return "redirect:/on/main";
 	}
+	
+	// 로그아웃
+	@GetMapping("/on/logout")
+	public String logout(HttpSession session) {
+		
+		session.invalidate();
+		
+		log.debug("/on/logout 실행 - 로그아웃 성공");
+		
+		return"redirect:/off/login";
+	}
+	
+	
+	
 	
 	
 }

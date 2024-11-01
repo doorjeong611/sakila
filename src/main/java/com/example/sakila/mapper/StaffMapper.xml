@@ -2,9 +2,30 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.sakila.mapper.StaffMapper"><!-- 인터페이스 이름 쓰기 -->
+	<!-- 기본타입으로 받지 않아서 Integer로 사용해야하지만 자동박싱/언박싱 되므로 int라고 사용해도 됨. 조인 시 Map으로 받을땐 java.util.Map or map 으로 받음. -->
+	
+	<!-- login -->
 	<select id= "login" parameterType="com.example.sakila.vo.Staff" resultType="com.example.sakila.vo.Staff">
 		SELECT staff_id staffId, store_id storeId , username 
 		FROM staff	
 		WHERE active = 1 AND staff_id = #{staffId} AND password = #{password}
 	</select>
+	
+	<!-- selectStaffOne -->
+	<select id="selectStaffOne" parameterType="int" resultType="com.example.sakila.vo.Staff">
+		SELECT staff_id staffId
+			   , first_name firstName
+			   , last_name lastName
+			   , address_id addressId
+			   , email
+			   , store_id storeId
+			   , active
+			   , username
+			   , password
+			   , last_update lastUpdate
+		FROM staff
+		WHERE staff_id = #{staffId}
+	</select>
+	
+	
 </mapper>

@@ -18,28 +18,71 @@
 
 <meta charset="UTF-8">
 <title>Login</title>
-</head>
-<body class="container">
-	
-	<div class="mt-5">
-	
-		<h1>staff login</h1>
-		<span>${msg}</span>
-		<form action="${pageContext.request.contextPath }/off/login" method="post">
-			<div class="mb-3 mt-3">
-				<label for="staffId" class="form-label">Staff-ID :</label>
-				<input type="number" class="form-control" id="staffId" placeholder="Enter Id" name="staffId">
-			</div>
-			<div class="mb-3">
-				<label for="password" class="form-label">Password :</label>
-				<input type="password" class="form-control" id="password" placeholder="Enter password" name="password">
-			</div>
+
+<script>
+	$(document).ready(function(){ // <body>까지 메모리에 올라간 후 script 실행.
+		  
+		// btn 클릭시 폼값 유효성 검사
+		$('#btn').click(function(){
+			console.log('click');
 			
-			<button type="submit" class="btn btn-primary">LOGIN</button>
-		</form>
+			/*숫자여부 확인( isNaN(), $.isNumeric() )*/
+			if($.isNumeric($('#staffId').val() ) == false ){ // 숫자가 아니라면
+				alert('id는 숫자만 입력하세요.');
+			
+			}else if($('#password').val().length < 4 ){
+				alert('password를 확인하세요.')
+				
+			}else{
+				$('#form').submit();
+			}
+			
+			
+		});
 		
-	</div>
+		
+	})
+</script>
+
+<style type="text/css">
+
+.loginBack{
 	
+	background-color: #ffffff;
+	
+}
+
+
+</style>
+
+</head>
+<body class="container bg-light pt-5">
+	
+	<div class="d-flex justify-content-center mt-5 pt-5">
+	
+		<div class="loginBack mt-5 col-md-3 p-3 rounded col-lg-4">
+		
+			<p class="h2 text-center text-secondary">STAFF LOGIN</p>
+			<span class="mt-1 pt-2 d-flex justify-content-center" style="color:red">${msg}</span>
+		
+		
+			
+			<form action="${pageContext.request.contextPath }/off/login" method="post" id="form">
+				<div class="mb-3 mt-3">
+					<label for="staffId" class="form-label">Staff-ID :</label>
+					<input type="text" class="form-control" id="staffId" placeholder="Enter Id" name="staffId">
+				</div>
+				<div class="mb-3">
+					<label for="password" class="form-label">Password :</label>
+					<input type="password" class="form-control" id="password" placeholder="Enter password" name="password">
+				</div>
+				<div class="d-flex justify-content-end">
+					<button type="button" class="btn btn-primary " id="btn" >LOGIN</button>
+				</div>
+			</form>
+		</div>		
+
+	</div>
 	
 </body>
 </html>
