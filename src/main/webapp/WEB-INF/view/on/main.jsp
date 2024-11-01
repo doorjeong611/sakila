@@ -29,18 +29,23 @@
 </script>
 
 </head>
-<body class= "container-fluid bg-light">
-	<div class="row m-5">
+<body class= "container-fluid">
+	<div class="row">
+		
+		<!-- includ : topMenu.jsp -->
+		<div>
+			<c:import url="/WEB-INF/view/on/inc/topMenu.jsp"></c:import>
+		</div>
 		
 		<!-- includ : leftMenu.jsp -->
-		<div class="col-sm-2">
-			<div class="col-sm-8">
+		<div class="col-sm-3">
+			<div >
 				<c:import url="/WEB-INF/view/on/inc/leftMenu.jsp"></c:import>
 			</div>
 		</div>
 		
 		<!-- main -->
-		<div class="col-sm-10">
+		<div class="col-sm-9">
 			<p class="h1">main</p>
 		</div>
 	</div>
