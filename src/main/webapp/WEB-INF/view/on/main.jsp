@@ -32,20 +32,20 @@
 <body class= "container-fluid">
 	<div class="row">
 		
-		<!-- includ : topMenu.jsp -->
+		<!-- include : topMenu.jsp -->
 		<div>
 			<c:import url="/WEB-INF/view/on/inc/topMenu.jsp"></c:import>
 		</div>
 		
-		<!-- includ : leftMenu.jsp -->
-		<div class="col-sm-3">
-			<div >
+		<!-- include : leftMenu.jsp -->
+		<div class="col-sm-2">
+			<div class="col-sm-9">
 				<c:import url="/WEB-INF/view/on/inc/leftMenu.jsp"></c:import>
 			</div>
 		</div>
 		
 		<!-- main -->
-		<div class="col-sm-9">
+		<div class="col-sm-10">
 			<p class="h1">main</p>
 		</div>
 	</div>

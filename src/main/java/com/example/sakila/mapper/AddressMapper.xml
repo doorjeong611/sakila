@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.sakila.mapper.AddressMapper">
+
+	<select id="selectAddressListBySearchWord" parameterType="String" resultType="com.example.sakila.vo.Address">
+		SELECT address_id addressId
+				, address
+		FROM address
+		WHERE Lower(address) LIKE Lower(CONCAT('%',#{searchAddress},'%'))
+	</select>
+
+</mapper>

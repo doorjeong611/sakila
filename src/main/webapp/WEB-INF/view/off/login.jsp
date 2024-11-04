@@ -27,8 +27,9 @@
 			console.log('click');
 			
 			/*숫자여부 확인( isNaN(), $.isNumeric() )*/
-			if($.isNumeric($('#staffId').val() ) == false ){ // 숫자가 아니라면
-				alert('id는 숫자만 입력하세요.');
+			//if($.isNumeric($('#staffId').val() ) == false ){ // 숫자가 아니라면
+			if($('#username').val() == null || $('#username').val() == ''){	// username으로 로그인하는 방법으로 수정
+				alert('username을 입력하세요.');
 			
 			}else if($('#password').val().length < 4 ){
 				alert('password를 확인하세요.')
@@ -69,8 +70,8 @@
 			
 			<form action="${pageContext.request.contextPath }/off/login" method="post" id="form">
 				<div class="mb-3 mt-3">
-					<label for="staffId" class="form-label">Staff-ID :</label>
-					<input type="text" class="form-control" id="staffId" placeholder="Enter Id" name="staffId">
+					<label for="username" class="form-label">Staff USERNAME :</label>
+					<input type="text" class="form-control" id="username" placeholder="Enter Id" name="username">
 				</div>
 				<div class="mb-3">
 					<label for="password" class="form-label">Password :</label>

@@ -63,7 +63,14 @@
                             <i class="fs-4 bi-grid"></i> <span class="ms-1 d-none d-sm-inline text-light">스태프 관리</span> </a>
                             <ul class="collapse nav flex-column ms-1" id="submenu3" data-bs-parent="#menu">
                             <li class="w-100">
-                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">스태프 추가</span></a>
+                                <a href="${pageContext.request.contextPath }/on/addStaff" class="nav-link px-0">
+                                	<span class="d-none d-sm-inline">ADD STAFF</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="${pageContext.request.contextPath }/on/staffList" class="nav-link px-0">
+                                	<span class="d-none d-sm-inline">STAFF LIST</span>
+                                </a>
                             </li>
                             <li>
                                 <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">스태프 수정</span></a>

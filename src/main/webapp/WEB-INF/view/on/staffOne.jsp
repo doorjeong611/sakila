@@ -25,21 +25,21 @@
 </head>
 <body class= "container-fluid bg-light">
 	<div class="row ">
-		<!-- includ : topMenu.jsp -->
+		<!-- include : topMenu.jsp -->
 		<div>
 			<c:import url="/WEB-INF/view/on/inc/topMenu.jsp"></c:import>
 		</div>
 		
-		<!-- includ : leftMenu.jsp -->
-		<div class="col-sm-3">
-			<div class="col-sm-8">
+		<!-- include : leftMenu.jsp -->
+		<div class="col-sm-2">
+			<div class="col-sm-9">
 				<c:import url="/WEB-INF/view/on/inc/leftMenu.jsp"></c:import>
 			</div>
 		</div>
 		
 		<!-- main -->
-		<div class="col-sm-9">
-			<p class="h1">STAFF ONE</p>
+		<div class="col-sm-10">
+			<p class="display-5 mt-5">STAFF ONE</p>
 			<br>
 			
 			
@@ -152,7 +152,15 @@
 							<td>${staff.storeCountry }</td>
 						</tr>
 	
-				</table>	
+				</table>
+				
+				<div>
+					<a href=""><button type="button" class="btn btn-primary">MODIFY PASSWORD</button></a>
+					<a href=""><button type="button" class="btn btn-primary">MODIFY EMAIL</button></a>
+					<a href=""><button type="button" class="btn btn-primary">MODIFY ADDRESS</button></a>
+					<a href=""><button type="button" class="btn btn-primary">MODIFY STORE</button></a>
+				</div>
+					
 			</div>
 			
 		</div>

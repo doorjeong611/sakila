@@ -20,9 +20,7 @@ public class LoginController {
 	/** Autowired **/
 	// staffMapper는 인터페이스이므로 객체생성 불가 이의 자식의 객체가 스프링 빈에 들어가있음 (다형성)
 	@Autowired StaffMapper staffMapper; // private해도 됨. 하지만 편하게 사용하기 위해 default로 설정함.
-	
-	
-	
+
 
 	// 로그인 폼으로 이동
 	@GetMapping("/off/login")
@@ -37,17 +35,22 @@ public class LoginController {
 	// 로그인 액션
 	@PostMapping("/off/login")
 	public String login(Model model, HttpSession session,
-			@RequestParam( name="staffId") int staffId , @RequestParam( name="password") String password) { 
+			@RequestParam( name="username") String username , @RequestParam( name="password") String password) { // 입력받는 값
 		
 		// OffInterceptor 호출
 		log.debug("/off/login 실행");
+		log.debug("username---> "+username);
 		
 		// int staffId = Integer.parseInt(request.getParameter("staffId"));
 		// String password = request.getParameter("password");
 		
 		Staff paramStaff = new Staff();
-		paramStaff.setStaffId(staffId);
+		paramStaff.setUsername(username);
 		paramStaff.setPassword(password);
+		
+		log.debug("param Id"+paramStaff.getStaffId());
+		log.debug("param PW"+paramStaff.getPassword());
+		
 		
 		Staff loginStaff = staffMapper.login(paramStaff);
 		
@@ -56,6 +59,8 @@ public class LoginController {
 			return "off/login"; // 포워딩 
 		}
 		session.setAttribute("loginStaff", loginStaff);
+		
+		log.debug("loginStaff.getRole()---> "+ loginStaff.getRole());
 		
 		return "redirect:/on/main";
 	}

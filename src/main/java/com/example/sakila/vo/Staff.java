@@ -11,9 +11,10 @@ public class Staff {
 	private int addressId; 		// FK
 	private String email;
 	private int storeId; 		// FK
-	private int active;
+	private String active;
 	private String username;
 	private String password;
 	private String lastUpdate;
+	private String role;
 	
 }

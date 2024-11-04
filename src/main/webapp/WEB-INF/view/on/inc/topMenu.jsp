@@ -15,7 +15,7 @@
 	  <div class="container-fluid">
 	    <ul class="navbar-nav">
 	      <li class="nav-item">
-	        <a class="nav-link active" href="${pageContext.request.contextPath}/on/main">HOME</a>
+	        <a class="nav-link active" href="${pageContext.request.contextPath}/on/main">SAKILA</a>
 	      </li>
 	     <li class="nav-item">
 	        <a class="nav-link" href="${pageContext.request.contextPath}/on/staffOne">${loginStaff.username }, 접속</a>

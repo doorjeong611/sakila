@@ -6,9 +6,9 @@
 	
 	<!-- login -->
 	<select id= "login" parameterType="com.example.sakila.vo.Staff" resultType="com.example.sakila.vo.Staff">
-		SELECT staff_id staffId, store_id storeId , username 
+		SELECT staff_id staffId, store_id storeId , username , role
 		FROM staff	
-		WHERE active = 1 AND staff_id = #{staffId} AND password = #{password}
+		WHERE active = 'T' AND username = #{username} AND password = #{password}
 	</select>
 	
 	<!-- selectStaffOne -->
@@ -119,5 +119,59 @@
 		
 	</select>
 	
+	<!-- addStaff => insertStaff -->
+	<insert id="insertStaff" parameterType="com.example.sakila.vo.Staff">
+		INSERT INTO staff(first_name, last_name, address_id, email, store_id, username) 
+		VALUES(#{firstName}, #{lastName}, #{addressId}, #{email}, #{storeId}, #{username})
+	</insert>
+	
+	<!-- staffList => selectStaffList -->
+	<select id="selectStaffList" parameterType="map" resultType="com.example.sakila.vo.Staff">
+		SELECT staff_id staffId
+			   , role
+			   , first_name firstName
+			   , last_name lastName
+			   , address_id addressId
+			   , email 
+			   , store_id storeId
+			   , active 
+			   , username
+			   , last_update lastUpdate
+		FROM staff	
+		order by staff_id
+		limit #{beginRow}, #{rowPerPage}   
+	</select>
+	
+	<!-- staffList => 페이징 -->
+	<select id="selectStaffCount" resultType="int">
+		SELECT count(*)
+		FROM staff	
+	</select>
+	
+	<!-- staffList => updateActive -->
+	<update id="updateStaff" parameterType="com.example.sakila.vo.Staff">
+		UPDATE staff 
+		<set>
+			<if test="active != null and active != '' ">
+				active = #{active},
+			</if>
+			<if test="role != null and role != '' ">
+				role = #{role},
+			</if>
+			<if test="addressId != null and addressId != '' ">
+				address_id = #{addressId},
+			</if>
+			<if test="email != null and email != '' ">
+				email = #{email},
+			</if>
+			<if test="storeId != null and storeId != '' ">
+				store_id = #{storeId},
+			</if>
+			<if test="password != null and password != '' ">
+				password = #{password},
+			</if>
+		</set>
+		WHERE staff_id = #{staffId} 
+	</update>
 	
 </mapper>
