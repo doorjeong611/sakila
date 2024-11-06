@@ -50,6 +50,15 @@
 		WHERE actor_id = #{actorId}
 	</select>
 
+	<!-- filmOne : selectActorListByFilm -->
+	<select id="selectActorListByFilm" parameterType="int" resultType="com.example.sakila.vo.Actor">
+		SELECT a.actor_id actorId
+				, a.first_name firstName
+				, a.last_name lastName
+		FROM film_actor fa INNER JOIN actor a
+		ON fa.actor_id = a.actor_id
+		WHERE fa.film_id = #{filmId}
+	</select>
 
 
 </mapper>

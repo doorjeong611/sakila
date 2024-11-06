@@ -1,6 +1,7 @@
 package com.example.sakila.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,5 +25,12 @@ public class FilmService {
 		
 		return filmMapper.selectFilmTitleListByActor(actorId);
 	}
+	
+	// /on/filmOne
+	public Map<String, Object> getFilmOne(int filmId){
+		return filmMapper.selectfilmOne(filmId);
+	}
+	
+	
 	
 }

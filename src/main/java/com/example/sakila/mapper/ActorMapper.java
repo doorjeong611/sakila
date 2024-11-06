@@ -13,10 +13,16 @@ public interface ActorMapper {
 	
 	int insertActor(Actor actor);
 	
+	// actorList
 	List<Actor> selectActorList(Map<String, Object> map);
 	
+	// actorList
 	int selectTotalCount(Map<String, Object> map);
 	
+	// actorOne
 	Actor selectActorOne(int actorId);
+	
+	// filmOne : ACTORLIST
+	List<Actor> selectActorListByFilm(int filmId);
 	 
 }

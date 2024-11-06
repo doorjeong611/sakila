@@ -7,6 +7,21 @@
 <html>
 <head>
 
+<style>
+
+.name{
+	text-decoration: none;
+	color : black;
+	background-color: #D4D4D4;
+}
+
+.name:hover{
+	color : #a0a0a0;
+}
+
+	
+</style>
+
 <!-- Latest compiled and minified CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -17,7 +32,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 <meta charset="UTF-8">
-<title>main</title>
+<title>actor one</title>
 
 <script>
 	$(document).ready(function(){ // <body>까지 메모리에 올라간 후 script 실행.
@@ -45,11 +60,16 @@
 		</div>
 		
 		<!-- main -->
-		<div class="col-sm-10">
+		<div class="col-sm-10 ">
 			<p class="display-4">actor one</p>
 			
-			<div ><!-- Actor -->
+			<div class="col-sm-7" ><!-- Actor -->
 				<table class="table">
+					<tr>
+						<th colspan="2" class="text-end">
+							<h3>ACTOR'S INFO</h3>
+						</th>
+					</tr>
 					<tr>
 						<th>ACTOR ID</th>
 						<td>${actor.actorId }</td>
@@ -67,32 +87,46 @@
 						<td>${actor.lastUpdate }</td>
 					</tr>
 				</table>
+				<div class="d-flex justify-content-end">
+					<a href="${pageContext.request.contextPath }/"><button type="button" class="btn btn-dark btn-sm">수정</button></a>
+				</div>
+				
 			</div>
 			
-			<div><!-- Actor File -->
+			<div class="col-sm-7"><!-- Actor File -->
 				<p class="h3">ACTOR FILE</p>
-				<table class="table">
-					<tr>
-						<th>IMAGE</th>
-						<th>TYPE</th>
-						<th>SIZE</th>
-						<th>LAST UPDATE</th>
-					</tr>
-					<c:forEach var="a" items="${actorFileList }">
-						<tr>
-							<td><img src="${pageContext.request.contextPath }/upload/${a.filename}.${a.ext}" style="width:300px"></td>
-							<td>${a.type}</td>
-							<td>${a.size} Byte</td>
-							<td>${a.lastUpdate}</td>
-						</tr>
-					</c:forEach>
-				</table>
+				<c:forEach var="a" items="${actorFileList }">
+				<div class="card" style="width: 200px">
+					<img class="card-img-top" src="${pageContext.request.contextPath }/upload/${a.filename}.${a.ext}" alt="Card image">
+					<div class="card-body">
+						<h4 class="card-title">${a.originname}.${a.ext }</h4>
+						<p class="card-text">
+							TYPE : ${a.type}
+							<br> SIZE : ${a.size} Byte
+							<br> LAST UPDATE : 
+							<br> ${a.lastUpdate}
+						</p>
+						<a href="${pageContext.request.contextPath }/#"><button type="button" class="btn btn-dark btn-sm">DELETE</button></a>
+					</div>
+				</div>
+				</c:forEach>
+
+
+				<div class="d-flex justify-content-end">
+					<a href="${pageContext.request.contextPath }/"><button type="button" class="btn btn-dark btn-sm">ADD IMAGE</button></a>
+				</div>
 			</div>
 			
-			<div><!-- Film -->
-				<p class="h3">출연작</p>
-				<c:forEach var="f" items="${filmList }">
-					<a href="${pageContext.request.contextPath }/on/filmOne?filmId=${f.filmId}">${f.title }</a>
+			<div class="col-sm-7 mt-3 "><!-- Film -->
+				<p class="h3">FILMOGRAPHY</p>
+				<c:forEach var="f" items="${filmList }" varStatus="status">
+					
+					<a href="${pageContext.request.contextPath }/on/filmOne?filmId=${f.filmId}" class="name m-2">${f.title }</a>
+					
+					<c:if test="${status.count % 5 == 0}">
+						<br>
+					</c:if>
+					
 				</c:forEach>
 			
 			</div>

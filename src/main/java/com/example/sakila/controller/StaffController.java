@@ -163,15 +163,31 @@ public class StaffController {
 	
 	// staffList -> staff 정보 수정
 	@GetMapping("/on/modifyStaff")
-	public String modifyStaff(Staff staff) {
+	public String modifyStaff(Staff staff, Model model, @RequestParam(defaultValue = "") String searchAddress) {
 		log.debug("[Get-modifyStaff]");
 		log.debug("staffId : "+staff.getStaffId());
 		
 		int staffId = staff.getStaffId();
 		
-		// service를 통해서 mapper에 접근해서 회원id로 회원정보 가져와서 modifyStaff.jsp로 이동.
-//		Staff staffInfo = ;
+		// model(StoreList)
+		List<Map<String , Object>> storeList = storeService.getStoreList();
+		model.addAttribute("storeList", storeList);
 		
+		// model(addressList) <- 검색 후 
+		if(!searchAddress.equals("") && searchAddress != null) {
+			
+			// addressService 호출
+			List<Address> addressList = addressService.getAddressListByWord(searchAddress);
+			model.addAttribute("addressList", addressList);
+			log.debug(addressList.toString());
+		}
+		
+		
+		// service를 통해서 mapper에 접근해서 회원id로 회원정보 가져와서 modifyStaff.jsp로 이동.
+		Staff staffInfo = staffService.getStaffInfo(staffId);
+		log.debug("AddressId : "+staffInfo.getAddressId());
+		
+		model.addAttribute("staffInfo", staffInfo);
 		
 		return "/on/modifyStaff";
 	}

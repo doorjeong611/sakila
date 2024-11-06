@@ -53,9 +53,9 @@ public class StaffService {
 		return staffMapper.selectStaffOne(staffId);
 	}
 
-//	public Staff getStaffInfo(int staffId) {
-//		return staffMapper.selectStaffInfo(staffId);
-//	}
+	public Staff getStaffInfo(int staffId) {
+		return staffMapper.selectStaffInfo(staffId);
+	}
 
 
 

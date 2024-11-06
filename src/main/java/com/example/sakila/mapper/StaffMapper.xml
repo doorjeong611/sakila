@@ -174,4 +174,22 @@
 		WHERE staff_id = #{staffId} 
 	</update>
 	
+	<!-- modifyStaff => selectStaffInfo -->
+	<select id="selectStaffInfo" parameterType="int" resultType="com.example.sakila.vo.Staff">
+		SELECT staff_id staffId
+				, first_name firstName
+				, last_name lastName
+				, address_id addressId
+				, email
+				, store_id
+				, active
+				, username
+				, password
+				, last_update lastUpdate
+				, role
+		FROM staff
+		WHERE staff_id = #{staffId}
+	</select>
+	
+	
 </mapper>

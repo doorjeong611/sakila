@@ -133,7 +133,11 @@ public class ActorService {
 	}
 	
 
-	
+	// /on/filmOne
+	public List<Actor> getActorListByFilm(int filmId){
+		
+		return actorMapper.selectActorListByFilm(filmId);
+	}
 	
 	
 	

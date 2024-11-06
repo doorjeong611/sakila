@@ -29,4 +29,10 @@ public interface StaffMapper {
 	// /on/staffList - 해당 업데이트문 하나로 모든 컬럼을 개별수정이 가능함.
 	int updateStaff(Staff staff);
 	
+	
+	// /on/modifyStaff - staff정보 가져오기
+	Staff selectStaffInfo(int staffId);
+	
+	
+	
 }
