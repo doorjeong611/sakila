@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.sakila.mapper.ActorMapper">
 
+	<!-- insertActor -->
 	<insert id="insertActor" parameterType="com.example.sakila.vo.Actor">
 		<selectKey resultType="int" keyProperty="actorId" order="AFTER">
 			SELECT LAST_INSERT_ID()
@@ -11,6 +12,43 @@
 		VALUES(#{firstName}, #{lastName})
 	</insert>
 
+	<!-- selectActorList -->
+	<select id="selectActorList" parameterType="map" resultType="com.example.sakila.vo.Actor">
+		SELECT actor_id actorId
+			   , first_name firstName
+			   , last_name lastName
+		FROM actor
+		<where>
+			<if test="searchWord != null">
+			   first_name LIKE CONCAT( '%', #{searchWord} ,'%' )
+		       OR last_name LIKE CONCAT( '%', #{searchWord} ,'%' )
+	    	</if>
+		</where>  
+		ORDER BY first_name ASC     
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+	
+	<!-- selectTotalCount -->
+	<select id="selectTotalCount" parameterType="map" resultType="int">
+		SELECT count(*)
+		FROM actor
+		<where>
+			<if test="searchWord != null">
+				first_name LIKE CONCAT( '%', #{searchWord} ,'%' )
+				OR last_name LIKE CONCAT( '%', #{searchWord} ,'%' )
+			</if>
+		</where>
+	</select>
+
+	<!-- selectActorOne -->
+	<select id="selectActorOne" parameterType="int" resultType="com.example.sakila.vo.Actor">
+		SELECT actor_id actorId
+			   , first_name firstName
+			   , last_name lastName
+			   , last_update lastUpdate
+		FROM actor
+		WHERE actor_id = #{actorId}
+	</select>
 
 
 

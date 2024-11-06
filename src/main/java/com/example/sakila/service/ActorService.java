@@ -2,7 +2,9 @@ package com.example.sakila.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,17 +14,23 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.sakila.mapper.ActorFileMapper;
 import com.example.sakila.mapper.ActorMapper;
+import com.example.sakila.mapper.FilmMapper;
 import com.example.sakila.vo.Actor;
 import com.example.sakila.vo.ActorFile;
 import com.example.sakila.vo.ActorForm;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
 @Transactional
+@Slf4j
 public class ActorService {
 	
 	@Autowired ActorMapper actorMapper;
 	@Autowired ActorFileMapper actorFileMapper;
+	@Autowired FilmMapper filmMapper;
 	
+	// insertActorFile
 	public void addActor(ActorForm actorForm, String path) {
 		Actor actor = new Actor();
 		actor.setFirstName(actorForm.getFirstName());
@@ -70,7 +78,64 @@ public class ActorService {
 			}
 			
 		}
-		
-		
+	
 	}
+	
+	// selectActorList
+	public List<Actor> getActorList(int currentPage, int rowPerPage, String searchWord){
+		log.debug("[ActorService - getActorList]");
+		log.debug("currentPage : " + currentPage);
+		log.debug("rowPerPage : " + rowPerPage);
+		log.debug("searchWord : " + searchWord);
+		
+		Map<String, Object> paramMap = new HashMap<>();
+		
+		int beginRow = (currentPage - 1)*rowPerPage;
+
+		paramMap.put("beginRow", beginRow);
+		paramMap.put("rowPerPage", rowPerPage);
+		paramMap.put("searchWord", searchWord);
+
+		List<Actor> actorList = actorMapper.selectActorList(paramMap);
+		
+		return actorList;
+	}
+	
+	
+	// selectTotalCount
+	public int getTotalCount( int rowPerPage, String searchWord) {
+		log.debug("[ActorService - getTotalCount]");
+				
+		Map<String, Object> map = new HashMap<>();
+		map.put("searchWord", searchWord);
+		map.put("rowPerPage", rowPerPage);
+
+		
+		int totalCount = actorMapper.selectTotalCount(map);
+		
+		int lastPage = totalCount / rowPerPage;
+		
+		if(totalCount % rowPerPage != 0) {
+			lastPage++;
+		}
+		
+		log.debug("totalCount : " + totalCount);
+		log.debug("lastPage : " + lastPage);
+		
+		return lastPage;
+	}
+	
+	
+	// /on/actorOne
+	public Actor getActorOne(int actorId) {
+		
+		return actorMapper.selectActorOne(actorId);
+	}
+	
+
+	
+	
+	
+	
+	
 }

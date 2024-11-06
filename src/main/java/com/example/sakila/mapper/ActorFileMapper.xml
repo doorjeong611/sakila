@@ -7,4 +7,19 @@
 		VALUES(#{actorId},#{originname},#{filename},#{ext},#{type},#{size})
 	</insert>
 
+	<select id="selectActorFileListByActor" parameterType="int" resultType="com.example.sakila.vo.ActorFile">
+		SELECT actor_id actorId
+			   , actor_file_id actorFileId
+			   , originname
+			   , filename
+			   , ext
+			   , type
+			   , size
+			   , last_update lastUpdate
+		FROM actor_file
+		WHERE actor_id = #{actorId}
+	</select>
+
+
+
 </mapper>
