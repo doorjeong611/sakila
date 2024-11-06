@@ -54,7 +54,7 @@
 	
 		// add staff action버튼
 		const emailTest = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/; 
-		const nameTest = /^[a-zA-Z가-힣]+$/
+		const nameTest = /^[a-zA-Z가-힣]+$/;
 				
 		$('#btnAddStaff').click(function() {
 			// 유효성 검사

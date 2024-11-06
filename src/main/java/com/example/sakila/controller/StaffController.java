@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.sakila.mapper.AddressMapper;
 import com.example.sakila.mapper.StaffMapper;
 import com.example.sakila.mapper.StoreMapper;
+import com.example.sakila.service.AddressService;
+import com.example.sakila.service.StaffService;
+import com.example.sakila.service.StoreService;
 import com.example.sakila.vo.Address;
 import com.example.sakila.vo.Staff;
 import com.example.sakila.vo.Store;
@@ -25,9 +28,9 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class StaffController {
 	
-	@Autowired StaffMapper staffMapper;
-	@Autowired StoreMapper storeMapper;
-	@Autowired AddressMapper addressMapper;
+	@Autowired StaffService staffService;
+	@Autowired StoreService storeService;
+	@Autowired AddressService addressService;
 	
 	// staffOne
 	@GetMapping("/on/staffOne")
@@ -35,7 +38,8 @@ public class StaffController {
 		
 		int staffId = ((Staff)(session.getAttribute("loginStaff"))).getStaffId();
 		
-		Map<String, Object> staff = staffMapper.selectStaffOne(staffId);
+		// staffService 호출
+		Map<String, Object> staff = staffService.getStaffOne(staffId);
 		model.addAttribute("staff", staff);
 		
 		log.debug(staff.toString());
@@ -59,15 +63,11 @@ public class StaffController {
 		
 		log.debug(map.toString());
 		
-		List<Staff> staffList = staffMapper.selectStaffList(map);
+		List<Staff> staffList = staffService.getStaffList(map);
 		log.debug(staffList.toString());
 		
-		int count = staffMapper.selectStaffCount();
-		int lastPage = count/rowPerPage;
-		
-		if(count % rowPerPage != 0) {
-			lastPage++;
-		}
+		// staffservice getLastPage()호출
+		int lastPage = staffService.getLastPage(rowPerPage);
 		
 		// model(staffList) 
 		model.addAttribute("staffList", staffList);
@@ -85,12 +85,14 @@ public class StaffController {
 		log.debug("searchAddress---> "+ searchAddress);
 		
 		// model(StoreList)
-		List<Map<String , Object>> storeList = storeMapper.selectStoreList();
+		List<Map<String , Object>> storeList = storeService.getStoreList();
 		model.addAttribute("storeList", storeList);
 		
 		// model(addressList) <- 검색 후 
 		if(!searchAddress.equals("") && searchAddress != null) {
-			List<Address> addressList = addressMapper.selectAddressListBySearchWord(searchAddress);
+			
+			// addressService 호출
+			List<Address> addressList = addressService.getAddressListByWord(searchAddress);
 			model.addAttribute("addressList", addressList);
 			log.debug(addressList.toString());
 		}
@@ -107,7 +109,8 @@ public class StaffController {
 		// insert
 		log.debug(staff.toString());
 		
-		int row = staffMapper.insertStaff(staff);
+		// StaffService addStaff 호출
+		int row = staffService.addStaff(staff);
 		log.debug("row---> " + row);
 		
 		if(row != 1) {// 실패시 다시 입력 폼으로
@@ -132,7 +135,7 @@ public class StaffController {
 		
 		log.debug("변경 후 active---> "+staff.getActive());
 		
-		int row = staffMapper.updateStaff(staff); // 어떤 컬럼값을 수정하든지 mapper메서드는 하나만 사용.
+		int row = staffService.modifyStaff(staff); // 어떤 컬럼값을 수정하든지 mapper메서드는 하나만 사용.
 			
 		return "redirect:/on/staffList";
 	}
@@ -150,13 +153,28 @@ public class StaffController {
 		}else {
 			staff.setRole("Staff");	
 		}
-		int row = staffMapper.updateStaff(staff);
+		// staffService의 modifyStaff 호출해서 맵퍼 접근
+		int row = staffService.modifyStaff(staff);
 		
 		return "redirect:/on/staffList";
 	}
 	
 	
 	
+	// staffList -> staff 정보 수정
+	@GetMapping("/on/modifyStaff")
+	public String modifyStaff(Staff staff) {
+		log.debug("[Get-modifyStaff]");
+		log.debug("staffId : "+staff.getStaffId());
+		
+		int staffId = staff.getStaffId();
+		
+		// service를 통해서 mapper에 접근해서 회원id로 회원정보 가져와서 modifyStaff.jsp로 이동.
+//		Staff staffInfo = ;
+		
+		
+		return "/on/modifyStaff";
+	}
 	
 	
 	

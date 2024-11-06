@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.sakila.mapper.ActorMapper">
+
+	<insert id="insertActor" parameterType="com.example.sakila.vo.Actor">
+		<selectKey resultType="int" keyProperty="actorId" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	
+		INSERT INTO actor(first_name, last_name)
+		VALUES(#{firstName}, #{lastName})
+	</insert>
+
+
+
+
+</mapper>

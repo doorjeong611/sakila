@@ -42,9 +42,10 @@
 			<p class="display-5 mt-5">STAFF ONE</p>
 			<br>
 			
-			
-			<div class="col-sm-6 mt-2">
-				<table class="table">
+			<div class="mt-2 "><!-- staffOne tables -->
+			<div class="d-flex pe-3">
+				<div class="col-lg-5 me-3"><!-- staff info -->
+					<table class="table">
 						<tr >
 							<th colspan="2">
 								<p class="h2 text-end">${staff.userName }'s Info</p>
@@ -91,9 +92,10 @@
 							<td>${staff.staffCountry }</td>
 						</tr>
 	
-				</table>
-				
-			<div class="mt-2">
+					</table>
+				</div><!-- staff insfo -->
+					
+			<div class=" col-lg-5"> <!-- manager's info -->
 				<table class="table">
 						<tr >
 							<th colspan="2">
@@ -114,9 +116,8 @@
 						</tr>
 	
 				</table>	
-			</div>
-			
-			<div class="mt-2">
+				
+				<div class="mt-2"><!-- Store's info -->
 				<table class="table">
 						<tr>
 							<th colspan="2">
@@ -161,10 +162,17 @@
 					<a href=""><button type="button" class="btn btn-primary">MODIFY STORE</button></a>
 				</div>
 					
+			</div><!-- Store's info -->
+				
+				
+			</div><!-- manager's info -->
+			
 			</div>
 			
-		</div>
-	</div>
+			
+			
+		</div><!-- staffOne tables -->
+	</div><!-- main 끝 -->
 	</div>
 </body>
 </html>

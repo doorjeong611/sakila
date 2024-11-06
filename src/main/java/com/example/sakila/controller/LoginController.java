@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.sakila.mapper.StaffMapper;
+import com.example.sakila.service.StaffService;
 import com.example.sakila.vo.Staff;
 
 import jakarta.servlet.http.HttpSession;
@@ -18,8 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 public class LoginController {
 	
 	/** Autowired **/
-	// staffMapper는 인터페이스이므로 객체생성 불가 이의 자식의 객체가 스프링 빈에 들어가있음 (다형성)
-	@Autowired StaffMapper staffMapper; // private해도 됨. 하지만 편하게 사용하기 위해 default로 설정함.
+	@Autowired StaffService staffService; // private해도 됨. 하지만 편하게 사용하기 위해 default로 설정함.
 
 
 	// 로그인 폼으로 이동
@@ -51,8 +51,8 @@ public class LoginController {
 		log.debug("param Id"+paramStaff.getStaffId());
 		log.debug("param PW"+paramStaff.getPassword());
 		
-		
-		Staff loginStaff = staffMapper.login(paramStaff);
+		// loginService의 login()을 호출해 Mapper에 접근
+		Staff loginStaff = staffService.login(paramStaff);
 		
 		if(loginStaff == null ) {// 로그인 실패
 			model.addAttribute("msg", "로그인 실패 !");

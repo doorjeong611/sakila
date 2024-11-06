@@ -25,11 +25,15 @@
 	text-decoration: none;
 }
 
+.tb1{
+	background-color: : white;
+}
+
 </style>
 
 
 </head>
-<body class= "container-fluid">
+<body class= "container-fluid bg-light">
 	<div class="row">
 		
 		<!-- include : topMenu.jsp -->
@@ -49,12 +53,12 @@
 		<!-- main -->
 		<div class="col-sm-10">
 		
-			<div class="pe-5">
+			<div class="pe-5"><!-- STAFF LIST -->
 				<p class="display-3">STAFF LIST</p>
 				
-				<table class="table ">
+				<table class="table tb1">
 					<tr>
-						<th colspan="12" class="pe-5">
+						<th colspan="13" class="pe-5">
 							<p class="h2 text-end">STAFF LIST</p>
 						</th>
 					</tr>
@@ -71,6 +75,7 @@
 						<th>ACTIVE</th>
 						<th>ACTIVATION</th>
 						<th>PRO/DEMOTION</th>
+						<th>MODIFY</th>
 					</tr>
 					<c:forEach var="s" items="${staffList }">
 					<tr>
@@ -93,7 +98,7 @@
 							<td> 활성화</td>
 						</c:if>	
 						<c:if test="${s.active != 'T'}">
-							<td> <span class="text-bg-secondary opacity-50">비활성화</span></td>
+							<td><span class="text-bg-secondary opacity-50">비활성화</span></td>
 						</c:if>	
 						<td>
 							<c:if test="${loginStaff.role == 'Manager'}">
@@ -116,11 +121,23 @@
 								*Access Denied
 							</c:if>
 						</td>
+						
+						<td>
+							<c:if test="${loginStaff.role == 'Manager' || loginStaff.username == s.username}">
+								<a href="${pageContext.request.contextPath }/on/modifyStaff?staffId=${s.staffId }&role=${s.role}">
+									<button type="button" class="btn btn-dark btn-sm">MODIFY</button>
+								</a>
+							</c:if>
+							<c:if test="${loginStaff.role != 'Manager' || loginStaff.username != s.username} ">
+								*Access Denied
+							</c:if>
+						</td>
+	
 					</tr>
 					</c:forEach>
 				</table>	
 				
-				<div>
+				<div><!-- pagination -->
 					<ul class="pagination justify-content-center">
 						<c:if test="${currentPage > 1 }">
 							
@@ -136,11 +153,11 @@
 							
 						</c:if>
 					</ul>	
-				</div>
-			</div>	
+				</div><!-- pagination -->
+				
+			</div><!-- STAFF LIST -->	
 			
-			
-		</div>
+		</div><!-- main -->
 	</div>
 </body>
 </html>
