@@ -21,6 +21,8 @@ import com.example.sakila.vo.Film;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 @Slf4j
@@ -40,7 +42,7 @@ public class ActorController {
 	
 	// addActor.jsp에서 넘어와 처리
 	@PostMapping("/on/addActor")
-	public String addActor(HttpSession session, ActorForm actorForm) {
+	public String addActor(HttpSession session, ActorForm actorForm , Model model) {
 		log.debug("[POST-addActor]");
 		log.debug("firstName : "+actorForm.getFirstName());
 		log.debug("lastName : "+actorForm.getLastName());
@@ -49,7 +51,22 @@ public class ActorController {
 			log.debug("actorFileSize : "+actorForm.getActorFile().size());
 		}
 		
-		String path = session.getServletContext().getRealPath("/upload")+"/";
+		
+		List<MultipartFile> list = actorForm.getActorFile();
+		if(list != null && list.size() != 0) {
+				
+			for(MultipartFile f : list) {
+				if(!f.getContentType().equalsIgnoreCase("image/jpeg") || !f.getContentType().equalsIgnoreCase("image/jgp") || 
+						!f.getContentType().equalsIgnoreCase("image/png") || !f.getContentType().equalsIgnoreCase("image/gif") ) {
+					
+					String msg="이미지 파일만 첨부가능";
+					model.addAttribute("msg", msg);
+					return "on/addActor";
+				}
+			}
+		}
+		
+		String path = session.getServletContext().getRealPath("/upload/");
 		log.debug("upload path : "+path);
 		
 		actorService.addActor(actorForm, path);
@@ -106,6 +123,37 @@ public class ActorController {
 		
 		return "/on/actorOne";
 	}
+	
+	// on/modifyActor
+	@GetMapping("/on/modifyActor")
+	public String modifyActor(@RequestParam int actorId, Model model) {
+		log.debug("[GET - modifyActor]");
+		log.debug("actorId : "+ actorId);	
+		
+		// service로부터 actorOne 요청해서 actorId일치하는 배우 정보 받기 -> modifyForm으로 전달
+		Actor actor = actorService.getActorOne(actorId);
+
+		model.addAttribute("actorId", actorId );
+		model.addAttribute("actor", actor );
+		
+		return "on/modifyActor";
+	}
+	
+	// on/modifyActor
+	@PostMapping("/on/modifyActor")
+	public String modifyActor(Actor actor) {
+		log.debug("[GET - modifyActor]");
+		log.debug("actorId : "+ actor.getActorId());	
+		
+		// service -> modify
+		int result = actorService.modifyActor(actor);
+		log.debug("result : "+ result);
+		
+		return "redirect:/on/actorList";
+	}
+	
+	
+	
 	
 	
 	

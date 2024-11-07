@@ -60,10 +60,11 @@
 		</div>
 		
 		<!-- main -->
-		<div class="col-sm-10 ">
+		<div class="col-sm-10  ">
+			
 			<p class="display-4">actor one</p>
 			
-			<div class="col-sm-7" ><!-- Actor -->
+			<div class="col-sm-7 " ><!-- Actor -->
 				<table class="table">
 					<tr>
 						<th colspan="2" class="text-end">
@@ -87,38 +88,41 @@
 						<td>${actor.lastUpdate }</td>
 					</tr>
 				</table>
-				<div class="d-flex justify-content-end">
-					<a href="${pageContext.request.contextPath }/"><button type="button" class="btn btn-dark btn-sm">수정</button></a>
+<!-- 과제 -->		<div class="d-flex justify-content-end">
+					<a href="${pageContext.request.contextPath }/on/modifyActor?actorId=${actor.actorId}"><button type="button" class="btn btn-dark btn-sm">수정</button></a>
 				</div>
 				
 			</div>
 			
 			<div class="col-sm-7"><!-- Actor File -->
 				<p class="h3">ACTOR FILE</p>
-				<c:forEach var="a" items="${actorFileList }">
-				<div class="card" style="width: 200px">
-					<img class="card-img-top" src="${pageContext.request.contextPath }/upload/${a.filename}.${a.ext}" alt="Card image">
-					<div class="card-body">
-						<h4 class="card-title">${a.originname}.${a.ext }</h4>
-						<p class="card-text">
-							TYPE : ${a.type}
-							<br> SIZE : ${a.size} Byte
-							<br> LAST UPDATE : 
-							<br> ${a.lastUpdate}
-						</p>
-						<a href="${pageContext.request.contextPath }/#"><button type="button" class="btn btn-dark btn-sm">DELETE</button></a>
-					</div>
-				</div>
-				</c:forEach>
-
-
+				
 				<div class="d-flex justify-content-end">
-					<a href="${pageContext.request.contextPath }/"><button type="button" class="btn btn-dark btn-sm">ADD IMAGE</button></a>
+					<a href="${pageContext.request.contextPath }/on/addActorFile?actorId=${actor.actorId}"><button type="button" class="btn btn-dark btn-sm">ADD IMAGE</button></a>
+				</div>
+				 <div class="d-flex flex-wrap gap-3">	
+					<c:forEach var="a" items="${actorFileList }">
+					<div class="card" style="width: 200px">
+						<img class="card-img-top" src="${pageContext.request.contextPath }/upload/${a.filename}.${a.ext}" alt="Card image">
+						<div class="card-body">
+							<h4 class="card-title">${a.originname}.${a.ext }</h4>
+							<p class="card-text">
+								TYPE : ${a.type}
+								<br> SIZE : ${a.size} Byte
+								<br> LAST UPDATE : 
+								<br> ${a.lastUpdate}
+							</p>
+							<a href="${pageContext.request.contextPath }/#"><button type="button" class="btn btn-dark btn-sm">DELETE</button></a>
+						</div>
+					</div>
+					</c:forEach>
+		
 				</div>
 			</div>
 			
 			<div class="col-sm-7 mt-3 "><!-- Film -->
 				<p class="h3">FILMOGRAPHY</p>
+
 				<c:forEach var="f" items="${filmList }" varStatus="status">
 					
 					<a href="${pageContext.request.contextPath }/on/filmOne?filmId=${f.filmId}" class="name m-2">${f.title }</a>
@@ -132,10 +136,7 @@
 			</div>
 			
 			
-			
-			
-			
-		</div>
+	</div><!-- main -->
 	</div>
 </body>
 </html>

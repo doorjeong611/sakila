@@ -16,23 +16,25 @@ public class StaffService {
 	// staffMapper는 인터페이스이므로 객체생성 불가 이의 자식의 객체가 스프링 빈에 들어가있음 (다형성)
 	@Autowired StaffMapper staffMapper; // private해도 됨. 하지만 편하게 사용하기 위해 default로 설정함.
 	
-	
+	// loginStaff
 	public Staff login(Staff paramStaff) {
 		
 		return staffMapper.login(paramStaff);
 	}
 	
-	
+	// modifyStaff : active, role
 	public int modifyStaff(Staff paramStaff) {
 		
 		return staffMapper.updateStaff(paramStaff);
 	}
 
+	// addStaff
 	public int addStaff(Staff paramStaff) {
 		
 		return staffMapper.insertStaff(paramStaff);
 	}
 
+	// staffList
 	public List<Staff> getStaffList(Map<String, Object> paramMap){
 		return staffMapper.selectStaffList(paramMap);
 	}
@@ -49,10 +51,12 @@ public class StaffService {
 	}
 
 
+	// staffOne
 	public Map<String, Object> getStaffOne(int staffId){		
 		return staffMapper.selectStaffOne(staffId);
 	}
 
+	// modifyStaff -> staffInfo
 	public Staff getStaffInfo(int staffId) {
 		return staffMapper.selectStaffInfo(staffId);
 	}

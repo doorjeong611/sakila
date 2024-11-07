@@ -113,6 +113,11 @@
 						<td>${film.lastUpdate }</td>
 					</tr>
 				</table>
+				
+				<div>
+					<a href="${${pageContext.request.contextPath}/on/modifyFilm}"><button type="button" class="btn btn-sm btn-dark">MODIFY</button></a>
+				</div>
+				
 			</div>
 			
 

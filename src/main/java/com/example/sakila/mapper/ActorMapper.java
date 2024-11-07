@@ -25,4 +25,8 @@ public interface ActorMapper {
 	// filmOne : ACTORLIST
 	List<Actor> selectActorListByFilm(int filmId);
 	 
+	
+	// on/modifyActor -> modifyActor : (Mapper)updateActor
+	int updateActor(Actor actor);
+	
 }

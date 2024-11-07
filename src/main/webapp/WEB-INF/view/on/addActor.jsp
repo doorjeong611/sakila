@@ -160,13 +160,14 @@
 								<td><input type="text" name="lastName" id="lastName"></td>
 							</tr>
 							<tr>
-								<th>file</th>
+								<th>FILE</th>
 								<td>
 									<div id="fileDiv">
 										<button type="button" class="btn btn-secondary btn-sm"
 											id="btnAddFile">파일추가</button>
 										<button type="button" class="btn btn-secondary btn-sm"
 											id="btnRemoveFile">파일삭제</button>
+										<span style="color:red"> ${msg }</span>	
 										<br>
 									</div>
 								</td>

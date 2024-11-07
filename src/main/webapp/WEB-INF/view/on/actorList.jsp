@@ -27,7 +27,7 @@
 }
 
 .name:hover{
-	color : #f3f3f3;
+	color : #a0a0a0;
 }
 
 	
@@ -69,18 +69,18 @@
 		<div class="col-sm-10 ">
 			<p class="display-4">ACTOR LIST</p>
 			
-			<div class="d-flex justify-content-center mt-4"><!-- center -->
+			<div class="d-flex justify-content-center mt-4 row"><!-- center -->	
 			
 			<div class="col-lg-8"><!-- table -->
-				<div class="col-sm-4"><!-- searchForm -->
-					<form action="${pageContext.request.contextPath }/on/actorList" method="get" id="searchForm">
+				<div class="d-flex justify-content-end"><!-- searchForm -->
+					<form action="${pageContext.request.contextPath }/on/actorList" method="get" id="searchForm" >
 						<div class="input-group mb-3 ">
 							<input type="text" name="searchWord" class="form-control" placeholder="Search" id="searchWord">
 							<button type="submit" class="btn btn-light" id="btnSearch">Search</button>
 						</div>
 					</form>
 				</div><!-- searchForm -->
-				
+			
 				<table class="table">
 					<tr>
 						<th>NUM</th>

@@ -30,7 +30,7 @@
                 
                 <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
 
-                     <li>
+                    <li>
                         <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
                             <i class="fs-4 bi-bootstrap"></i> <span class="ms-1 d-none d-sm-inline text-light">상점관리</span></a>
                         <ul class="collapse nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
@@ -96,6 +96,45 @@
                                 <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">MODIFY ACTOR</span></a>
                             </li>
                            
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#submenu5" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                            <i class="fs-4 bi-grid"></i> <span class="ms-1 d-none d-sm-inline text-light">FILM 관리</span> </a>
+                            <ul class="collapse nav flex-column ms-1" id="submenu5" data-bs-parent="#menu">
+                            <li class="w-100">
+                                <a href="${pageContext.request.contextPath }/on/addFilm" class="nav-link px-0">
+                                	<span class="d-none d-sm-inline">ADD FILM</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="nav-link px-0">
+                                	<span class="d-none d-sm-inline">FILM LIST</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">MODIFY FILM</span></a>
+                            </li>
+                        </ul>
+                    </li>
+                     <li>
+                        <a href="#submenu6" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                            <i class="fs-4 bi-grid"></i> <span class="ms-1 d-none d-sm-inline text-light">통계</span> </a>
+                            <ul class="collapse nav flex-column ms-1" id="submenu6" data-bs-parent="#menu">
+                            <li class="w-100">
+                                <a href="#" class="nav-link px-0">
+                                	<span class="d-none d-sm-inline">#</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="nav-link px-0">
+                                	<span class="d-none d-sm-inline">#</span>
+
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">#</span></a>
+                            </li>
                         </ul>
                     </li>
                   

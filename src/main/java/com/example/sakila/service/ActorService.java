@@ -30,7 +30,7 @@ public class ActorService {
 	@Autowired ActorFileMapper actorFileMapper;
 	@Autowired FilmMapper filmMapper;
 	
-	// insertActorFile
+	// insertActorFile : 파일첨부
 	public void addActor(ActorForm actorForm, String path) {
 		Actor actor = new Actor();
 		actor.setFirstName(actorForm.getFirstName());
@@ -128,18 +128,25 @@ public class ActorService {
 	
 	// /on/actorOne
 	public Actor getActorOne(int actorId) {
-		
+		log.debug("[ActorService - getActorOne]");
 		return actorMapper.selectActorOne(actorId);
 	}
 	
 
 	// /on/filmOne
 	public List<Actor> getActorListByFilm(int filmId){
+		log.debug("[ActorService - getActorListByFilm]");
 		
 		return actorMapper.selectActorListByFilm(filmId);
 	}
 	
 	
-	
+	// /on/modifyActor : modifyActor -> (Mapper)updateActor
+	public int modifyActor(Actor actor) {
+		log.debug("[ActorService - modifyActor]");
+		
+		return actorMapper.updateActor(actor);
+		
+	}
 	
 }

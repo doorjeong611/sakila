@@ -7,15 +7,16 @@ public class Film {
 	
 	private int filmId;				// PK
 	private String title;
-	private String description;
-	private String releaseYear;
+	private String description;		// null
+	private Integer releaseYear;	// null
 	private int languageId;			// FK
-	private int originalLanguageId;	// FK
+	private Integer originalLanguageId;	// FK
 	private int rentalDuration;
 	private double rentalRate;
-	private int length;
+	private Integer length;				// 기본값 : null int의 기본값은 0이기 때문에 Integer로 받음(null)받기 위해
 	private double replacementCost;
 	private String rating;
+	private String specialFeatures;	// 기본값 : null
 	private String lastUpdate;
 
 }
