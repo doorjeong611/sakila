@@ -57,6 +57,19 @@
 				<c:import url="/WEB-INF/view/on/inc/leftMenu.jsp"></c:import>
 			</div>
 		</div>
+		<!-- 
+			1) Actor 상세 ⭕
+			1-1) actor 수정 - /on/modifyActor
+			1-2) actor 삭제 - /on/removeActor (actor_file 삭제 + film_actor 삭제 + actor 삭제)
+			
+			2) actor_file 리스트 ⭕
+			2-1) actor_file 추가 ⭕ /on/addFilmCategory -> 카테고리 전체목록에서 선택
+			2-2) actor_file 수정  /on/removeFilmCategory
+			
+			3) film_actor 리스트 ⭕
+			3-1) film_actor 추가 /on/addActorByFilm -> actor 검색 후  선택
+			3-2) film_actor 삭제 /on/removeActorByFilm
+		 -->
 		
 		<!-- main -->
 		<div class="col-sm-10">
@@ -115,7 +128,7 @@
 				</table>
 				
 				<div>
-					<a href="${${pageContext.request.contextPath}/on/modifyFilm}"><button type="button" class="btn btn-sm btn-dark">MODIFY</button></a>
+					<a href="${pageContext.request.contextPath}/on/modifyFilm}"><button type="button" class="btn btn-sm btn-dark">MODIFY</button></a>
 				</div>
 				
 			</div>

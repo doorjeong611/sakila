@@ -13,4 +13,14 @@ public interface ActorFileMapper {
 	 
 	List<ActorFile> selectActorFileListByActor(int actorId);
 	
+	// /on/removeActorFile -> 단일파일 삭제
+	int deleteActorFile(int actorFileId);
+	
+	// /on/removeActorFile : Service
+	ActorFile selectActorFileOne(int actorFileId);
+	
+	// on/deleteActor -> 관련 배우의 모든 파일 삭제
+	int deleteActorFileByActor(int actorId);
+	
+	
 }

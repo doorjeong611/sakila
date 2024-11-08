@@ -74,6 +74,25 @@ public class ActorFileService {
 		
 		}
 		
+	}//
+	
+	
+	// /on/removeActorFile
+	// 1) actor_file 삭제 2) 물리 파일 삭제
+	public void removeActorFile(int actorFileId, String path) {
+		// 1) file 이름 select
+		ActorFile actorFile = actorFileMapper.selectActorFileOne(actorFileId);
+		int row = actorFileMapper.deleteActorFile(actorFileId);
+		if(row == 1) { // 1) actor_file 삭제 되었다면 2) 물리 파일 삭제
+			String fullName = path +  actorFile.getFilename() + "." + actorFile.getExt();
+			
+			File f = new File(fullName); // 없으면 만들고 있으면 가져오고
+			f.delete();
+			
+		}
 	}
+	
+	
+	
 
 }

@@ -29,4 +29,10 @@ public interface ActorMapper {
 	// on/modifyActor -> modifyActor : (Mapper)updateActor
 	int updateActor(Actor actor);
 	
+	
+	// on/deleteActor
+	int deleteActor(int actorId); 
+	
+	
+	
 }

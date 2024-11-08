@@ -105,8 +105,10 @@ public class ActorController {
 	
 	// actorOne
 	@GetMapping("/on/actorOne")
-	public String actorOne(@RequestParam int actorId, Model model) {
+	public String actorOne(@RequestParam int actorId, @RequestParam(defaultValue = "") String searchTitle,Model model) {
 		log.debug("[GET - actorOne ]");
+		
+		// searchWord = ""이라면 actorOne 요청, ""이 아니라면 film검색 요청임.
 		
 		Actor actor = actorService.getActorOne(actorId);
 		List<ActorFile> actorFileList = actorFileService.getActorFileListByActor(actorId);
@@ -116,6 +118,12 @@ public class ActorController {
 		log.debug("actorFileList : "+ actorFileList.toString());		
 		log.debug("filmList : "+ filmList.toString());		
 		
+		if(!searchTitle.equals("")) {
+			// film검색결과 리스트를 추가.
+			List<Film> searchFilmList =  filmService.getFilmListByTitle(searchTitle);
+			model.addAttribute("searchFilmList", searchFilmList);
+		}
+		
 		model.addAttribute("actor", actor);
 		model.addAttribute("actorFileList", actorFileList);
 		model.addAttribute("filmList", filmList);
@@ -124,7 +132,7 @@ public class ActorController {
 		return "/on/actorOne";
 	}
 	
-	// on/modifyActor
+	// on/modifyActor : actor 정보 수정
 	@GetMapping("/on/modifyActor")
 	public String modifyActor(@RequestParam int actorId, Model model) {
 		log.debug("[GET - modifyActor]");
@@ -152,7 +160,17 @@ public class ActorController {
 		return "redirect:/on/actorList";
 	}
 	
-	
+
+	// /on/removeActor
+	@GetMapping("/on/removeActor")
+	public String removeActor(@RequestParam int actorId, HttpSession session) {
+		
+		String path = session.getServletContext().getRealPath("/upload/");
+		
+		actorService.removeActor(actorId, path);
+		
+		return "redirect:/on/actorList";
+	}
 	
 	
 	

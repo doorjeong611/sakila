@@ -36,7 +36,15 @@
 
 <script>
 	$(document).ready(function(){ // <body>까지 메모리에 올라간 후 script 실행.
-		
+		// film title검색하는 버턴
+		$('#btnSearchFilm').click(function(){
+			$('#formSearchFilm').submit();
+		});
+	
+		// 출연작(film) 추가하는 버턴
+		$('#btnAddFilm').click(function(){ 
+			$('#formAddFilm').submit();
+		});
 		
 		
 		
@@ -58,6 +66,20 @@
 				<c:import url="/WEB-INF/view/on/inc/leftMenu.jsp"></c:import>
 			</div>
 		</div>
+		
+		<!-- 
+			1) Actor 상세 ⭕
+			1-1) actor 수정 - /on/modifyActor
+			1-2) actor 삭제 - /on/removeActor (actor_file 삭제 + film_actor 삭제 + actor 삭제)
+			
+			2) actor_file 리스트 ⭕
+			2-1) actor_file 추가 ⭕
+			2-2) actor_file 수정 /on/revoceActorFile
+			
+			3) film_actor 리스트 ⭕
+			3-1) film_actor 추가 /on/addFilmByActor -> film 검색 후 선택
+			3-2) film_actor 삭제 /on/removeFilmActor
+		 -->
 		
 		<!-- main -->
 		<div class="col-sm-10  ">
@@ -90,6 +112,7 @@
 				</table>
 <!-- 과제 -->		<div class="d-flex justify-content-end">
 					<a href="${pageContext.request.contextPath }/on/modifyActor?actorId=${actor.actorId}"><button type="button" class="btn btn-dark btn-sm">수정</button></a>
+					<a href="${pageContext.request.contextPath }/on/removeActor?actorId=${actor.actorId}"><button type="button" class="btn btn-dark btn-sm">삭제</button></a>
 				</div>
 				
 			</div>
@@ -112,7 +135,7 @@
 								<br> LAST UPDATE : 
 								<br> ${a.lastUpdate}
 							</p>
-							<a href="${pageContext.request.contextPath }/#"><button type="button" class="btn btn-dark btn-sm">DELETE</button></a>
+							<a href="${pageContext.request.contextPath }/on/removeActorFile?actorFileId=${a.actorFileId}&actorId${actor.actorId}"><button type="button" class="btn btn-dark btn-sm">DELETE</button></a>
 						</div>
 					</div>
 					</c:forEach>
@@ -120,13 +143,13 @@
 				</div>
 			</div>
 			
-			<div class="col-sm-7 mt-3 "><!-- Film -->
+			<div class="col-sm-7 mt-3 "><!-- Film -->  <!-- <a>태그로 삭제 만들기.. -->
 				<p class="h3">FILMOGRAPHY</p>
 
 				<c:forEach var="f" items="${filmList }" varStatus="status">
 					
 					<a href="${pageContext.request.contextPath }/on/filmOne?filmId=${f.filmId}" class="name m-2">${f.title }</a>
-					
+					<a href="${pageContext.request.contextPath }/on/removeFileActor?filmId=${f.filmId}&actorId=${actor.actorId}">삭제</a><!-- film_actor에서도 삭제  -->
 					<c:if test="${status.count % 5 == 0}">
 						<br>
 					</c:if>
@@ -134,6 +157,29 @@
 				</c:forEach>
 			
 			</div>
+			
+			<hr>
+			<div><!-- 출연작품 -->
+				<p class="h3">search</p>
+
+				<form action="${pageContext.request.contextPath }/on/actorOne" method="get"> <!-- 영화 검색 -->
+					<!-- film 검색시 actorId 같이 전달 -->
+					<input type="hidden" name="actorId" value=${actor.actorId }>
+					<input type="text" name="searchTitle">
+					<button type="button" class="btn btn-sm btn-dark" id="btnSearchFilm" >SEARCH FILM</button>
+
+				</form>
+				<form action="${pageContext.request.contextPath}/on/addFilmByActor" method="post" id="formAddFilm">
+					<input type="hidden" name="actorId" value="${actor.actorId}">
+					<select size="5" name="filmId">
+						<c:forEach var="sfl" items="${searchFilmList }">
+							<option value="${sfl.flimId }"> ${sfl.title}</option>
+						</c:forEach>
+					</select>
+					<button type="button" class="btn btn-sm btn-dark" id="btnAddFilm" >ADD FILM </button>
+				</form>
+			</div>
+
 			
 			
 	</div><!-- main -->

@@ -14,7 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.sakila.mapper.ActorFileMapper;
 import com.example.sakila.mapper.ActorMapper;
-import com.example.sakila.mapper.FilmMapper;
+import com.example.sakila.mapper.FilmActorMapper;
+
 import com.example.sakila.vo.Actor;
 import com.example.sakila.vo.ActorFile;
 import com.example.sakila.vo.ActorForm;
@@ -28,7 +29,7 @@ public class ActorService {
 	
 	@Autowired ActorMapper actorMapper;
 	@Autowired ActorFileMapper actorFileMapper;
-	@Autowired FilmMapper filmMapper;
+	@Autowired FilmActorMapper filmActorMapper;
 	
 	// insertActorFile : 파일첨부
 	public void addActor(ActorForm actorForm, String path) {
@@ -148,5 +149,46 @@ public class ActorService {
 		return actorMapper.updateActor(actor);
 		
 	}
+	
+	// /on/deleteActor : 
+	public void removeActor(int actorId, String path) {
+		/*
+		 * 1. film_actor 삭제
+		 * 2. actor_file 삭제
+		 * 3. actor 삭제
+		 * 4. 물리적 파일 삭제
+		 */
+		
+		// 1. film_actor 삭제
+		filmActorMapper.deleteFilmActorByActor(actorId);
+		
+		// 2. actor_file 삭제
+		List<ActorFile> list = actorFileMapper.selectActorFileListByActor(actorId);
+		
+		actorFileMapper.deleteActorFileByActor(actorId);
+
+		
+		//3. actor 삭제
+		int row = actorMapper.deleteActor(actorId);
+		
+		
+		//4. 물리적 파일 삭제
+		if(row == 1 && list != null && list.size() > 0 ) {
+			for(ActorFile af : list) {
+				String fullName = path + af.getFilename() + af.getExt();
+				
+				File f = new File(fullName); // 있으면 가져오고 없으면 만들고
+				f.delete();
+				
+			}
+		}
+		
+		
+		
+		
+	}
+	
+	
+	
 	
 }

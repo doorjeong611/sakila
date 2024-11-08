@@ -21,5 +21,37 @@
 	</select>
 
 
+	<!-- /on/removeActorFile : 단일 파일 삭제 --> 
+	<delete id="deleteActorFile" parameterType="int">
+		DELETE
+		FROM actor_file
+		WHERE actor_file_id = #{actorFileId}
+	</delete>
+
+	<!--  -->
+	<select id="selectActorFileOne" parameterType="int" resultType="com.example.sakila.vo.ActorFile">
+		SELECT actor_file_id actorFileId
+				, filename 
+				, ext
+		FROM actor_file
+		WHERE actor_file_id = #{actorFileId}
+	</select>
+	
+	<!-- /on/removeActor : 관련 배우의 모든 파일 삭제 -->
+	<delete id="deleteActorFileByActor" parameterType="int">
+		DELETE
+		FROM actor_file
+		WHERE actor_id = #{actorId}
+	</delete>
+	
+
+	
+	
+
+
+
+
+
+
 
 </mapper>

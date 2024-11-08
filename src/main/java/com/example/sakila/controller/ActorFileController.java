@@ -65,5 +65,21 @@ public class ActorFileController {
 		return "redirect:/on/actorOne?actorId="+ actorId;
 	}
 	
+	// removeActorFile
+	@GetMapping("/on/removeActorFile")
+	public String getMethremoveActorFileodName(@RequestParam int actorFileId 
+												, @RequestParam int actorId 
+												, HttpSession session) {
+		String path = session.getServletContext().getRealPath("/upload/");
+		actorFileService.removeActorFile(actorFileId, path);
+		return "redirect:/on/actorOne?actorId="+actorId;
+	}
 	
-}
+	
+	
+	
+	
+	
+	
+	
+}// end

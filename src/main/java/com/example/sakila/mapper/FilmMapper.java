@@ -19,4 +19,8 @@ public interface FilmMapper {
 	// on/addFilm
 	int insertFilm(Film film);
 	
+	// on/actorOne : film 검색시 사용.
+	List<Film> selectFilmListByTitle(String searchTitle);
+	
+	
 }

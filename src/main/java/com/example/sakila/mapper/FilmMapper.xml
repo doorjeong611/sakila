@@ -63,4 +63,14 @@
 	
 	</insert>
 
+	<!--  -->
+	<select id="selectFilmListByTitle" parameterType="String" resultType="com.example.sakila.vo.Film">
+		SELECT	film_id filmId
+				, title
+		FROM film
+		WHERE title LIKE CONCAT('%', #{searchTitle}, '%')
+	</select>
+
+
+
 </mapper>

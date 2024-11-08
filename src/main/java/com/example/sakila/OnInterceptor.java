@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
+
 @Slf4j
 @Component // 스프링이 알아서 new OnIntercept 이렇게 만들어 스프링 빈에 등록시킴. -> @Autowired를 통해 가져올 수 있음. 같은 원리로 작동 : @controller, @mapper 
 public class OnInterceptor implements HandlerInterceptor{

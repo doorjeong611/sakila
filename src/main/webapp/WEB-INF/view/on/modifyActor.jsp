@@ -86,15 +86,18 @@
 						<table class="table">
 							<tr>
 								<th>ACTOR ID</th>
-								<td><input type="text" name="actorId" id="actorId" value="${actor.actorId }" readonly></td>
+								<td>
+									<input type="text" name="actorId" id="actorId" value="${actor.actorId }" readonly></td>
 							</tr>
 							<tr>
 								<th>FIRST NAME</th>
-								<td><input type="text" name="firstName" id="firstName" value="${actor.firstName }"></td>
+								<td>	
+									<input type="text" name="firstName" id="firstName" value="${actor.firstName }">
+								</td>
 							</tr>
 							<tr>
 								<th>LAST NAME</th>
-								<td><input type="text" name="lastName" id="lastName" value="${actor.lastName }"></td>
+								<td><form><input type="text" name="lastName" id="lastName" value="${actor.lastName }"></form></td>
 							</tr>
 							
 						</table>

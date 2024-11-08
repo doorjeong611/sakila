@@ -75,5 +75,16 @@
 	</update>
 
 
+	<!-- deleteActor -->
+	<delete id="deleteActor" parameterType="int">
+		DELETE
+		FROM actor
+		WHERE actor_id = #{actorId}
+	</delete>
+
+
+
+
+
 
 </mapper>

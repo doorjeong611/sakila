@@ -143,6 +143,7 @@
 						<button type="button" class="btn btn-primary btn-sm" id="btnAddress">주소 검색</button>
 					</form>
 				</div>
+				
 				<c:if test="${addressList.size() >= 1 }">
 				<div class="mt-3  mb-4">
 					<p class="h4 ">주소 선택</p>
