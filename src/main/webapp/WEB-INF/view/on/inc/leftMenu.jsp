@@ -35,10 +35,26 @@
                             <i class="fs-4 bi-bootstrap"></i> <span class="ms-1 d-none d-sm-inline text-light">상점관리</span></a>
                         <ul class="collapse nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
                             <li class="w-100">
-                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">상점 리스트</span> </a>
+			                    <a href="${pageContext.request.contextPath }/on/storeList" class="nav-link px-0"> <span class="d-none d-sm-inline">STORE LIST</span> </a>
+								<!-- 
+									storeMapper.selectStoreList() : Map - store * staff * address
+									storeService.getStoreList() : Map
+									/on/storeList : storeController -> storeList.jsp
+								 -->	
                             </li>
                             <li>
-                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">상점 추가</span> </a>
+                                <a href="${pageContext.request.contextPath }/on/addStore" class="nav-link px-0"> <span class="d-none d-sm-inline">상점 추가</span> </a>
+                           		<!-- 
+                           			Get - /on/addStore 
+                           				- [Controller] StaffList 모델 추가 
+                           				- [Controller] address 주소 검색 추가.(searchAddress)
+                           				- [View] addStore.jsp
+                           			Post - /on/addStore : Integer
+                           				 - storeService.addStore() : Integer
+                           				 - storeMapper.insertStore(store) : store(추가) + staff(수정) 	
+
+								 -->
+                           
                             </li>
 							<li>
                                 <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">상점 리스트</span> </a>
@@ -108,12 +124,18 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#" class="nav-link px-0">
+                                <a href="${pageContext.request.contextPath }/on/filmList" class="nav-link px-0">
                                 	<span class="d-none d-sm-inline">FILM LIST</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">MODIFY FILM</span></a>
+                            </li>
+                            <li>
+                                <a href="${pageContext.request.contextPath }/on/languageList" class="nav-link px-0"> <span class="d-none d-sm-inline">LANGUAGE LIST</span></a>
+                            </li>
+                            <li>
+                                <a href="${pageContext.request.contextPath }/on/addLanguage" class="nav-link px-0"> <span class="d-none d-sm-inline">ADD LANGUAGE</span></a>
                             </li>
                         </ul>
                     </li>

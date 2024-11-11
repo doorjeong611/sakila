@@ -17,7 +17,7 @@ public class FilmActorService {
 	@Autowired FilmActorMapper filmActorMapper;
 	
 	public int addFilmActor(FilmActor filmActor) {
-		return filmActorMapper.insertFileActor(filmActor);
+		return filmActorMapper.insertFilmActor(filmActor);
 	}
 	
 	

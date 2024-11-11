@@ -8,7 +8,7 @@ import com.example.sakila.vo.FilmActor;
 public interface FilmActorMapper {
 
 	// actorOne : filmactor 입력
-	int insertFileActor(FilmActor filmActor);
+	int insertFilmActor(FilmActor filmActor);
 	
 	// actorOne : film 삭제 : 필모그래피 작품 삭제
 	int deleteFilmActor(FilmActor filmActor);

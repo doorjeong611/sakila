@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.example.sakila.vo.Film;
+import com.example.sakila.vo.Language;
 
 @Mapper
 public interface FilmMapper {
@@ -22,5 +23,27 @@ public interface FilmMapper {
 	// on/actorOne : film 검색시 사용.
 	List<Film> selectFilmListByTitle(String searchTitle);
 	
+	// on/filmList 
+	// category 없을 때(categoryId == -1) filmList
+	List<Map<String , Object>> selectFilmList(Map<String , Object> paramMap);
+	
+	// on/filmList 
+	// category 있을 때(categoryId != -1) filmList
+	List<Map<String , Object>> selectFilmListByCategory(Map<String , Object> paramMap);
+	
+	// on/filmList 
+	// category 없을 때(categoryId == -1) : totalFilmCount : lastPage구하기
+	int selectFilmTotalCount(Integer categorrId);
+	
+	// on/filmList 
+	// category 있을 때(categoryId != -1) : totalFilmCount : lastPage구하기
+	int selectFilmTotalCountByCategoty(Integer categorrId);
+	
+	
+	// on/languageList 
+	List<Language> selectLanguageList();
+	
+	// on/addLanguage
+	int insertLanguage(String name);
 	
 }

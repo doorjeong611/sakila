@@ -28,7 +28,7 @@
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	
-	<!-- selectTotalCount -->
+	<!-- selectTotalCount : pagination -->
 	<select id="selectTotalCount" parameterType="map" resultType="int">
 		SELECT count(*)
 		FROM actor

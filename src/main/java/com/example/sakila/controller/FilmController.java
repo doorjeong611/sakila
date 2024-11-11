@@ -10,9 +10,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.sakila.service.ActorService;
+import com.example.sakila.service.CategoryService;
 import com.example.sakila.service.FilmService;
 import com.example.sakila.service.LanguageService;
 import com.example.sakila.vo.Actor;
+import com.example.sakila.vo.Category;
+import com.example.sakila.vo.Film;
 import com.example.sakila.vo.FilmForm;
 import com.example.sakila.vo.Language;
 
@@ -28,6 +31,7 @@ public class FilmController {
 	@Autowired FilmService filmService;
 	@Autowired ActorService actorService;
 	@Autowired LanguageService languageService;
+	@Autowired CategoryService categoryService;
 	
 	@GetMapping("/on/filmOne")
 	public String filmOne(@RequestParam int filmId, Model model) {
@@ -74,9 +78,80 @@ public class FilmController {
 		
 	}
 	
-	
-	
+	// on/filmList
+	@GetMapping("/on/filmList")
+	public String filmList(@RequestParam(required = false) Integer categoryId
+											, @RequestParam(defaultValue = "1" ) int currentPage
+											, @RequestParam(defaultValue = "10") int rowPerPage
+											, Model model) {
+		log.debug("[Get - filmList]");
+		log.debug("categoryId : " + categoryId);
+		log.debug("currentPage : " + currentPage);
+		log.debug("rowPerPage : " + rowPerPage);
 
+		// filmList
+		List<Map<String , Object>> filmList = filmService.getFilmList(categoryId, currentPage, rowPerPage);
+		log.debug("filmList : " + filmList.toString());
+		
+		
+		// categoryList
+		List<Category> categoryList = categoryService.getCategoryList();
+		log.debug("categoryList : " + categoryList.toString());
+		
+		// pagination
+		int lastPage = filmService.getFilmTotalCount(rowPerPage, categoryId);
+		
+		model.addAttribute("filmList", filmList);
+		model.addAttribute("categoryList", categoryList);
+		model.addAttribute("CurrentCategoryId", categoryId); // jsp에서 select부분에 보여주기 위해 추가
+		
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("rowPerPage", rowPerPage);
+		model.addAttribute("lastPage", lastPage);
+		
+		return "on/filmList";
+	}
+	
+	// on/languageList
+	@GetMapping("/on/languageList")
+	public String getLanguageList(Model model) {
+		log.debug("[Get - getLanguageLists]");
+		
+		List<Language> langList = filmService.getLanguageList();
+		log.debug("languageList : " + langList.toString());
+		
+		model.addAttribute("langList", langList);
+
+		return "on/languageList";
+	}
+	
+	// on/addLanguage
+	@GetMapping("/on/addLanguage")
+	public String addLanguage() {
+		log.debug("[Get - addLanguage]");
+
+		return "on/addLanguage";
+	}
+	
+	// on/addLanguage
+	@PostMapping("/on/addLanguage")
+	public String addLanguage(@RequestParam String name, Model model) {
+		log.debug("[Post - addLanguage]");
+		
+		int result = filmService.addLanguage(name);
+		log.debug("result : " + result);
+		
+		if(result == -1) {
+			String msg = "이미 등록된 언어입니다.";
+			model.addAttribute("msg", msg);
+			 return "on/addLanguage";
+		}
+		
+		
+		
+		return "redirect:/on/languageList";
+	}
+	
 	
 	
 }

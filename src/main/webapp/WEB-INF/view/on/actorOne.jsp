@@ -36,12 +36,12 @@
 
 <script>
 	$(document).ready(function(){ // <body>까지 메모리에 올라간 후 script 실행.
-		// film title검색하는 버턴
+		// film title검색하는 버튼
 		$('#btnSearchFilm').click(function(){
 			$('#formSearchFilm').submit();
 		});
 	
-		// 출연작(film) 추가하는 버턴
+		// 출연작(film) 추가하는 버튼
 		$('#btnAddFilm').click(function(){ 
 			$('#formAddFilm').submit();
 		});
@@ -149,7 +149,7 @@
 				<c:forEach var="f" items="${filmList }" varStatus="status">
 					
 					<a href="${pageContext.request.contextPath }/on/filmOne?filmId=${f.filmId}" class="name m-2">${f.title }</a>
-					<a href="${pageContext.request.contextPath }/on/removeFileActor?filmId=${f.filmId}&actorId=${actor.actorId}">삭제</a><!-- film_actor에서도 삭제  -->
+					<a href="${pageContext.request.contextPath }/on/removeFilmActor?filmId=${f.filmId}&actorId=${actor.actorId}">삭제</a><!-- film_actor에서도 삭제  -->
 					<c:if test="${status.count % 5 == 0}">
 						<br>
 					</c:if>
@@ -162,7 +162,7 @@
 			<div><!-- 출연작품 -->
 				<p class="h3">search</p>
 
-				<form action="${pageContext.request.contextPath }/on/actorOne" method="get"> <!-- 영화 검색 -->
+				<form action="${pageContext.request.contextPath }/on/actorOne" method="get" id="formSearchFilm"> <!-- 영화 검색 -->
 					<!-- film 검색시 actorId 같이 전달 -->
 					<input type="hidden" name="actorId" value=${actor.actorId }>
 					<input type="text" name="searchTitle">
@@ -173,7 +173,7 @@
 					<input type="hidden" name="actorId" value="${actor.actorId}">
 					<select size="5" name="filmId">
 						<c:forEach var="sfl" items="${searchFilmList }">
-							<option value="${sfl.flimId }"> ${sfl.title}</option>
+							<option value="${sfl.filmId }"> ${sfl.title}</option>
 						</c:forEach>
 					</select>
 					<button type="button" class="btn btn-sm btn-dark" id="btnAddFilm" >ADD FILM </button>

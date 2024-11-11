@@ -60,7 +60,7 @@
 		<!-- 
 			1) Actor 상세 ⭕
 			1-1) actor 수정 - /on/modifyActor
-			1-2) actor 삭제 - /on/removeActor (actor_file 삭제 + film_actor 삭제 + actor 삭제)
+			1-2) actor 삭제 - /on/removeActor (inventory와 rental 정보 확인 + actor_file 삭제 + film_actor 삭제 + actor 삭제)
 			
 			2) actor_file 리스트 ⭕
 			2-1) actor_file 추가 ⭕ /on/addFilmCategory -> 카테고리 전체목록에서 선택
@@ -69,6 +69,9 @@
 			3) film_actor 리스트 ⭕
 			3-1) film_actor 추가 /on/addActorByFilm -> actor 검색 후  선택
 			3-2) film_actor 삭제 /on/removeActorByFilm
+			
+			4) inventory 정보 확인
+			
 		 -->
 		
 		<!-- main -->

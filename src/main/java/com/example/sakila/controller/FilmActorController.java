@@ -18,15 +18,21 @@ public class FilmActorController {
 	
 	@Autowired FilmActorService filmActorService;
 	
-	@PostMapping("addFilmByActor")
+	// actorOne : 배우의 필모그래피 추가.
+	@PostMapping("/on/addFilmByActor")
 	public String addFilmByActor(FilmActor filmActor) {
 		log.debug("[Post -addFilmByActor ]" );
 		log.debug("filmId: " + filmActor.getFilmId());
 		log.debug("actorId" + filmActor.getActorId());
 		
+		int result = filmActorService.addFilmActor(filmActor);
+		
+		log.debug("result" + result);
+		
 		return "redirect:/on/actorOne?actorId="+filmActor.getActorId();
 	}
 
+	// actorOne : 배우의 필모그래피 삭제
 	@GetMapping("/on/removeFilmActor")
 	public String removeFilmActor(FilmActor filmActor) {
 		log.debug("[Get -removeFilmActor ]" );

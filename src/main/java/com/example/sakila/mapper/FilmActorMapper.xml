@@ -2,7 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.sakila.mapper.FilmActorMapper">
 
-	<insert id="insertFileActor" parameterType="com.example.sakila.vo.FilmActor">
+
+	<!-- actorOne : 배우의 필모그래피 입력 -->
+	<insert id="insertFilmActor" parameterType="com.example.sakila.vo.FilmActor">
 		INSERT INTO film_actor (actor_id, film_id)
 		VALUES(#{actorId}, #{filmId})
 	</insert>

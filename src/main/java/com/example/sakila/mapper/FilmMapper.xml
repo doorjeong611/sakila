@@ -63,7 +63,7 @@
 	
 	</insert>
 
-	<!--  -->
+	<!-- actorOne.jsp : searchFilm -->
 	<select id="selectFilmListByTitle" parameterType="String" resultType="com.example.sakila.vo.Film">
 		SELECT	film_id filmId
 				, title
@@ -71,6 +71,117 @@
 		WHERE title LIKE CONCAT('%', #{searchTitle}, '%')
 	</select>
 
+	<!-- on/filmList : filmList --> <!-- 카테고리 없을 때 -->
+<!-- 	<select id="selectFilmList" parameterType="map" resultType="map">
+		SELECT film_id filmId
+				, title
+				, release_year releaseYear
+				, rating
+				, rental_rate rentalRate
+				, rental_duration rentalDuration
+				, length
+				, replacement_cost replacementCost
+		FROM film
+		ORDER BY release_year DESC
+		LIMIT #{beginRow} , #{rowPerPage}
+	</select> -->
+	
+	<!-- on/filmList : filmList --> <!-- 카테고리 없을 때 -->
+	<select id="selectFilmList" parameterType="map" resultType="map">
+		SELECT c.category_id categoryId
+				, c.name name
+				, f.film_id filmId
+				, f.title title
+				, f.release_year releaseYear
+				, f.rating rating
+				, f.rental_rate rentalRate
+				, f.rental_duration rentalDuration
+				, f.length length
+				, f.replacement_cost replacementCost
+		FROM 	film f INNER JOIN (SELECT ca.category_id category_id
+												, ca.name name
+												, fc.film_id film_id
+										FROM category ca INNER JOIN film_category fc
+										ON ca.category_id = fc.category_id) c
+		ON f.film_id = c.film_id
+		ORDER BY f.release_year DESC
+		LIMIT #{beginRow} , #{rowPerPage}
+	</select>
+	
+
+
+	<!--  on/filmList : filmList --> <!-- 카테고리 있을 때 -->
+	<!-- <select id="selectFilmListByCategory" parameterType="map" resultType="map">
+		SELECT  fc.category_id categoryId
+				, f.film_id filmId
+				, f.title
+				, f.release_year releaseYear
+				, f.rating
+				, f.rental_rate rentalRate
+				, f.rental_duration rentalDuration
+				, f.length
+				, f.replacement_cost replacementCost
+		FROM film f inner JOIN film_category fc
+		ON f.film_id = fc.film_id
+		WHERE fc.category_id =#{categoryId}
+		ORDER BY release_year DESC
+		LIMIT #{beginRow} , #{rowPerPage}
+	</select> -->
+	
+	
+	<!-- on/filmList : filmList --> <!-- 카테고리 있을 때 -->
+	<select id="selectFilmListByCategory" parameterType="map" resultType="map">
+		SELECT c.category_id categoryId
+				, c.name name
+				, f.film_id filmId
+				, f.title title
+				, f.release_year releaseYear
+				, f.rating rating
+				, f.rental_rate rentalRate
+				, f.rental_duration rentalDuration
+				, f.length length
+				, f.replacement_cost replacementCost
+		FROM 	film f INNER JOIN (SELECT ca.category_id category_id
+												, ca.name name
+												, fc.film_id film_id
+										FROM category ca INNER JOIN film_category fc
+										ON ca.category_id = fc.category_id) c
+		ON f.film_id = c.film_id
+		WHERE c.category_id =#{categoryId}
+		ORDER BY f.release_year DESC
+		LIMIT #{beginRow} , #{rowPerPage}
+	</select>	
+	
+	
+	
+	
+
+	<!--  on/filmList : totalFilmCount : 카테고리가 없을 때 pagination -->
+	<select id="selectFilmTotalCount" parameterType="Integer" resultType="int">
+		SELECT count(*)
+		FROM film
+	</select>
+	
+	<!--  on/filmList : totalFilmCount : 카테고리가 있을 때 pagination -->
+	<select id="selectFilmTotalCountByCategoty" parameterType="Integer" resultType="int">
+		SELECT count(*)
+		FROM film f inner JOIN film_category fc
+		ON f.film_id = fc.film_id
+		WHERE fc.category_id =#{categoryId}
+	</select>
+	
+	<!-- on/languageList  -->
+	<select id="selectLanguageList" resultType="com.example.sakila.vo.Language">
+		SELECT language_id languageId
+				, name
+		FROM language
+	</select>
+	
+	<!-- on/addLanguage -->
+	<insert id="insertLanguage" parameterType="String" >
+		INSERT INTO language(name) VALUES(#{name})
+	</insert>
+	
 
 
 </mapper>

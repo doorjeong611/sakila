@@ -3,7 +3,8 @@
 <mapper namespace="com.example.sakila.mapper.StoreMapper">
 
 	<select id="selectStoreList" resultType="map">
-		SELECT s.store_id storeId, a.address address
+		SELECT s.store_id storeId
+			   , a.address address
 		FROM store s INNER JOIN address a
 		ON s.address_id = a.address_id;	
 	</select>

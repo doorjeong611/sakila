@@ -1,5 +1,6 @@
 package com.example.sakila.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ import com.example.sakila.mapper.FilmMapper;
 import com.example.sakila.vo.Actor;
 import com.example.sakila.vo.Film;
 import com.example.sakila.vo.FilmForm;
+import com.example.sakila.vo.Language;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -72,9 +74,90 @@ public class FilmService {
 		return filmMapper.insertFilm(film);
 	}
 	
-	
+	// on/actorOne : filmList Search
 	public List<Film> getFilmListByTitle(String searchTitle){
 		return filmMapper.selectFilmListByTitle(searchTitle);
+	}
+	
+	
+	// /on/filmList : filmList
+	public List<Map<String , Object>> getFilmList(Integer categoryId, int currentPage, int rowPerPage){
+		log.debug("[FilmService - getFilmList]");
+		
+		Map<String, Object> paramMap = new HashMap<>();
+		if(categoryId == null || categoryId == -1) { // categoryId가 없을 때
+			
+			paramMap.put("categoryId", null);
+		}else {
+			paramMap.put("categoryId", categoryId);
+		}
+		int beginRow = (currentPage - 1)*rowPerPage;
+		
+		paramMap.put("beginRow", beginRow);
+		paramMap.put("rowPerPage", rowPerPage);
+
+		log.debug("categoryId : " + categoryId);
+		
+		if(paramMap.get("categoryId") == null) {
+			return filmMapper.selectFilmList(paramMap);
+			
+		}else {
+			return filmMapper.selectFilmListByCategory(paramMap);
+		}
+		
+		
+	}
+	
+	// on/filmList : filmList totalCount
+	public int getFilmTotalCount(int rowPerPage, Integer categoryId ) {
+		log.debug("[FilmService - getFilmTotalCount]");
+		
+		log.debug("categoryId : "+ categoryId);
+		log.debug("rowPerPage : "+ rowPerPage);
+		
+		int totalCount = -1;
+		
+		if(categoryId == null || categoryId == -1) {
+			totalCount = filmMapper.selectFilmTotalCount(categoryId);
+		}else {
+			totalCount = filmMapper.selectFilmTotalCountByCategoty(categoryId);
+		}
+		
+		log.debug("totalCount : "+ totalCount);
+
+		int lastPage = totalCount / rowPerPage;
+		
+		if(totalCount % rowPerPage != 0) {
+			lastPage++;
+		}
+		
+		log.debug("lastPage : "+ lastPage);
+		
+		return lastPage;
+	}
+	
+	// on/languageList 
+	public List<Language> getLanguageList(){
+		log.debug("[FilmService - getLanguageList]");
+		
+		return filmMapper.selectLanguageList();
+	}
+	
+	// on/addLanguage
+	public int addLanguage(String name) {
+		log.debug("[FilmService - addLanguage]");
+		
+		List<Language> list = filmMapper.selectLanguageList();
+		
+		for(Language s : list) {
+			
+			if(name.equals(s.getName())) {// 등록하려는 언어의 중복 확인
+				return -1;
+			}
+			
+		}
+
+		return filmMapper.insertLanguage(name);
 	}
 	
 	
