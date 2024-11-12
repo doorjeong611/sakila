@@ -16,4 +16,8 @@ public interface FilmActorMapper {
 	// deleteActor : 관련 배우의 모든 작품 삭제
 	int deleteFilmActorByActor(int actorId);
 	
+	
+	// on/romoveFilm : 필름 삭제시 film_actor 삭제
+	Integer deleteFilmActorByFilm(Integer filmId);
+	
 }

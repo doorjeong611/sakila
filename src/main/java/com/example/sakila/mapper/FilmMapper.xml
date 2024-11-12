@@ -12,6 +12,7 @@
 	</select>
 
 	<!-- /on/filmOne : 영화 정보  -->
+	<!-- /on/modifyFilm  -->
 	<select id="selectfilmOne" parameterType="int" resultType="map">
 		SELECT f.film_id filmId
 				, f.title title
@@ -72,7 +73,7 @@
 	</select>
 
 	<!-- on/filmList : filmList --> <!-- 카테고리 없을 때 -->
-<!-- 	<select id="selectFilmList" parameterType="map" resultType="map">
+	<select id="selectFilmList" parameterType="map" resultType="map">
 		SELECT film_id filmId
 				, title
 				, release_year releaseYear
@@ -84,10 +85,10 @@
 		FROM film
 		ORDER BY release_year DESC
 		LIMIT #{beginRow} , #{rowPerPage}
-	</select> -->
+	</select> 
 	
 	<!-- on/filmList : filmList --> <!-- 카테고리 없을 때 -->
-	<select id="selectFilmList" parameterType="map" resultType="map">
+	<!-- 	<select id="selectFilmList" parameterType="map" resultType="map">
 		SELECT c.category_id categoryId
 				, c.name name
 				, f.film_id filmId
@@ -106,12 +107,12 @@
 		ON f.film_id = c.film_id
 		ORDER BY f.release_year DESC
 		LIMIT #{beginRow} , #{rowPerPage}
-	</select>
+	</select>-->
 	
 
 
 	<!--  on/filmList : filmList --> <!-- 카테고리 있을 때 -->
-	<!-- <select id="selectFilmListByCategory" parameterType="map" resultType="map">
+	<select id="selectFilmListByCategory" parameterType="map" resultType="map">
 		SELECT  fc.category_id categoryId
 				, f.film_id filmId
 				, f.title
@@ -126,11 +127,11 @@
 		WHERE fc.category_id =#{categoryId}
 		ORDER BY release_year DESC
 		LIMIT #{beginRow} , #{rowPerPage}
-	</select> -->
+	</select> 
 	
 	
 	<!-- on/filmList : filmList --> <!-- 카테고리 있을 때 -->
-	<select id="selectFilmListByCategory" parameterType="map" resultType="map">
+	<!-- <select id="selectFilmListByCategory" parameterType="map" resultType="map">
 		SELECT c.category_id categoryId
 				, c.name name
 				, f.film_id filmId
@@ -150,10 +151,7 @@
 		WHERE c.category_id =#{categoryId}
 		ORDER BY f.release_year DESC
 		LIMIT #{beginRow} , #{rowPerPage}
-	</select>	
-	
-	
-	
+	</select>-->	
 	
 
 	<!--  on/filmList : totalFilmCount : 카테고리가 없을 때 pagination -->
@@ -182,6 +180,37 @@
 		INSERT INTO language(name) VALUES(#{name})
 	</insert>
 	
-
+	<!-- on/removeFilm  -->
+	<delete id="deleteFilmByKey" parameterType="Integer">
+		DELETE
+		FROM film
+		WHERE film_id = #{filmId}
+	</delete>
+	
+	<!-- on/modifyFilm -->
+	<update id="updateFilm" parameterType="com.example.sakila.vo.Film" ><!-- 참조타입 : null , 값타입 - 숫자 : 0, 논리 : false 가 기본값. -->
+		UPDATE film
+		<set>
+			<if test="title != null">title = #{title},</if>
+			<if test="description != null">description= #{description},</if>
+			
+			<if test="releaseYear != null"> release_year = #{releaseYear},</if>
+			<if test="rentalDuration != null"> rental_duration = #{rentalDuration} , </if>
+			
+			<if test="rentalRate != null"> rental_rate = #{rentalRate},</if>
+			<if test="length != null"> length = #{length},</if>
+			
+			<if test="replacementCost != null"> replacement_cost = #{replacementCost},</if>
+			<if test="rating != null"> rating = #{rating},</if>
+			
+			<if test="specialFeatures != null"> special_features = #{specialFeatures},</if>
+			<if test="originalLanguageId != null"> original_language_id = #{originalLanguageId},</if>
+			
+			<if test="languageId != null"> language_id = #{languageId},</if>
+			
+		</set>
+		WHERE film_id = #{filmId}
+	</update>
+	
 
 </mapper>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.sakila.mapper.InventoryMapper">
+	
+	<!-- /on/removeFilm - selectCountInventoryByFilm: 특정 film의 재고가 존재하는지 -->
+	<select id="selectCountInventoryByFilm" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(*)
+		FROM inventory
+		WHERE film_id = #{filmId}
+	</select>
+</mapper>

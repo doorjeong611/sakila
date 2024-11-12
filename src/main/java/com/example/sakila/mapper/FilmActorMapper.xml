@@ -24,6 +24,11 @@
 		WHERE actor_id = #{actorId}
 	</delete>
 
-
+	<!-- on/removeFilm : 필름 삭제시 관련 actor 삭제 -->
+	<delete id="deleteFilmActorByFilm" parameterType="Integer">
+		DELETE	
+		FROM film_actor
+		WHERE film_id = #{filmId}
+	</delete>
 
 </mapper>

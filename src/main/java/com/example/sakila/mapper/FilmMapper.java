@@ -6,13 +6,14 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.example.sakila.vo.Film;
+import com.example.sakila.vo.FilmForm;
 import com.example.sakila.vo.Language;
 
 @Mapper
 public interface FilmMapper {
 	
 	// on/actorOne
-	List<Film> selectFilmTitleListByActor(int actorId);
+	/*public abstract*/List<Film> selectFilmTitleListByActor(int actorId);
 	
 	// on/filmOne : film join language
 	Map<String, Object> selectfilmOne(int filmId);
@@ -45,5 +46,11 @@ public interface FilmMapper {
 	
 	// on/addLanguage
 	int insertLanguage(String name);
+	
+	// on/removeFilm 
+	Integer deleteFilmByKey(Integer filmId);
+	
+	// on/modifyFilm
+	Integer updateFilm(Film film);
 	
 }

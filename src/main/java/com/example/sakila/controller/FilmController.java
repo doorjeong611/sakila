@@ -9,9 +9,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.sakila.mapper.InventoryMapper;
 import com.example.sakila.service.ActorService;
 import com.example.sakila.service.CategoryService;
+import com.example.sakila.service.FilmCategoryService;
 import com.example.sakila.service.FilmService;
+import com.example.sakila.service.InventoryService;
 import com.example.sakila.service.LanguageService;
 import com.example.sakila.vo.Actor;
 import com.example.sakila.vo.Category;
@@ -32,19 +35,44 @@ public class FilmController {
 	@Autowired ActorService actorService;
 	@Autowired LanguageService languageService;
 	@Autowired CategoryService categoryService;
+	@Autowired InventoryService inventoryService;
+	@Autowired FilmCategoryService filmCategoryService;
 	
+	// on/filmOne
 	@GetMapping("/on/filmOne")
-	public String filmOne(@RequestParam int filmId, Model model) {
+	public String filmOne(Model model, @RequestParam int filmId, @RequestParam(required = false) String searchName ) {
 		log.debug("[GET - filmOne]");
 		
-		Map<String, Object> film = filmService.getFilmOne(filmId);		
+		/** [출력 정보]
+		 * 1) 해당 film의 정보
+		 * 2) 전체 category
+		 * 3) 해당 film의 category
+		 * 4) actor 검색(searchName) -> 검색어 관련 actorList
+		 * 5) 해당 film의 출연 actorList 
+		 **/
+		
+		// 1) 해당 film의 정보
+		Map<String, Object> film = filmService.getFilmOne(filmId);	
+		log.debug("film_language : " + film.get("language"));
+		
+		// 2) 전체 category
+		List<Category> allCategoryList = categoryService.getCategoryList();
+		log.debug("allCategoryList.0.categoryId : " + allCategoryList.get(0).getCategoryId());
+		
+		// 3) 해당 film의 category
+		List<Map<String, Object>> filmCategoryList = filmCategoryService.getFilmCategoryListByFilm(filmId);
+		
+		
+		// 5) 해당 film의 출연 actorList 
 		List<Actor> actorList =  actorService.getActorListByFilm(filmId);
 		
 		model.addAttribute("film", film);
+		model.addAttribute("allCategoryList", allCategoryList);
+		model.addAttribute("filmCategoryList", filmCategoryList);
 		model.addAttribute(actorList);
 		
 		log.debug("film_language : " + film.get("language"));
-		log.debug("actorList firstName : " + actorList.get(0).getFirstName());
+		//log.debug("actorList firstName : " + actorList.get(0).getFirstName());
 		
 		
 		return "on/filmOne";
@@ -146,10 +174,80 @@ public class FilmController {
 			model.addAttribute("msg", msg);
 			 return "on/addLanguage";
 		}
-		
-		
-		
+
 		return "redirect:/on/languageList";
+	}
+	
+	// on/removeFilm
+	@GetMapping("/on/removeFilm")
+	public String getRemoveFilm(Model model, @RequestParam(required = false) Integer filmId ) {
+		log.debug("[Get - removeFilm]");
+		
+		Integer count = inventoryService.getCountInventoryByFilm(filmId);
+		log.debug("count : " + count);
+		
+		if(count != 0) {
+			String removeMsg = "INVENTORY에 존재! 삭제 불가";
+			model.addAttribute("removeMsg", removeMsg);
+			
+			Map<String, Object> film = filmService.getFilmOne(filmId);		
+			List<Actor> actorList =  actorService.getActorListByFilm(filmId);
+			
+			model.addAttribute("film", film);
+			model.addAttribute(actorList);
+			
+			return "on/filmOne";
+		}
+		
+		filmService.removeFilmByKey(filmId);
+		
+		return "redirect:/on/filmList";
+	}
+	
+	
+	// on/modifyFilm
+	@GetMapping("/on/modifyFilm")
+	public String modifyFilm( @RequestParam(required = false) Integer filmId , Model model) {
+		log.debug("[Get - modifyFilm]");
+		log.debug("filmId : " + filmId);
+		// modifyFilmForm.jsp로 이동
+		
+		// Language
+		List<Language> languageList = languageService.getLanguageList();
+		
+		Map<String, Object> map = filmService.getFilmOne(filmId);
+		log.debug("title : " + map.get("title"));
+		log.debug("releaseYear : " + map.get("releaseYear"));
+		log.debug("languageId : " + map.get("languageId"));
+		
+		model.addAttribute("map", map);
+		model.addAttribute("languageList", languageList);
+		model.addAttribute("filmId", filmId);
+		
+		return "/on/modifyFilmForm";
+	}
+	
+	
+	// on/modifyFilm
+	@PostMapping("/on/modifyFilm")
+	public String postMethodName(@RequestParam int filmId, FilmForm filmForm , Model model) {
+		log.debug("[Post - modifyFilm]");
+		log.debug("filmId : " + filmId);
+		
+		log.debug("title : " + filmForm.getTitle());
+		
+		filmService.modifyFilm(filmForm, filmId);
+		
+		// 다시 filmOne으로 돌아가기 위해..
+		Map<String, Object> film = filmService.getFilmOne(filmId);		
+		List<Actor> actorList =  actorService.getActorListByFilm(filmId);
+		
+		model.addAttribute("film", film);
+		model.addAttribute(actorList);
+		
+		model.addAttribute("filmId", filmId);
+		
+		return "on/filmOne";
 	}
 	
 	

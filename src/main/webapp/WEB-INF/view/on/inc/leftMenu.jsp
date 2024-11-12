@@ -137,6 +137,12 @@
                             <li>
                                 <a href="${pageContext.request.contextPath }/on/addLanguage" class="nav-link px-0"> <span class="d-none d-sm-inline">ADD LANGUAGE</span></a>
                             </li>
+                            <li>
+                                <a href="${pageContext.request.contextPath }/on/languageList" class="nav-link px-0"> <span class="d-none d-sm-inline">CATEGORY LIST</span></a>
+                            </li>
+                            <li>
+                                <a href="${pageContext.request.contextPath }/on/addLanguage" class="nav-link px-0"> <span class="d-none d-sm-inline">ADD CATEGORY</span></a>
+                            </li>
                         </ul>
                     </li>
                      <li>

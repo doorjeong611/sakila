@@ -24,6 +24,7 @@
 .name{
 	text-decoration: none;
 	color : black;
+	background-color: #D4D4D4;
 }
 
 .name:hover{
@@ -131,10 +132,63 @@
 				</table>
 				
 				<div>
-					<a href="${pageContext.request.contextPath}/on/modifyFilm}"><button type="button" class="btn btn-sm btn-dark">MODIFY</button></a>
+					<a href="${pageContext.request.contextPath}/on/modifyFilm?filmId=${film.filmId}"><button type="button" class="btn btn-sm btn-dark">MODIFY</button></a>
+					<a href="${pageContext.request.contextPath}/on/removeFilm?filmId=${film.filmId}"><button type="button" class="btn btn-sm btn-dark">DELETE</button></a>
+					<span class="text-danger">${removeMsg }</span>
 				</div>
 				
 			</div>
+			
+			<div><!-- CATEGORY -->
+				<p class="h3">CATEGORY</p>
+				<div>
+					<form action="post" id="">
+						<select name="categoryId">
+							<option value="">CATEGORY</option>
+							<c:forEach var="ac" items="${allCategoryList }">
+								<option value="${ac.categoryId}">${ac.name}</option>
+							</c:forEach>
+						</select>
+					
+						<button type="button" class="btn btn-sm btn-dark" id="">ADD CATEGORY</button>
+					</form>
+				</div>
+				
+				<div><!-- 해당 FILM의 CATEGORY 출력 -->
+					<p class="h3">FILMOGRAPHY</p>
+
+					<c:forEach var="f" items="${filmCategoryList }" varStatus="status">
+					
+					<a href="#" class="name m-2">${f.name }</a>
+					<a href="${pageContext.request.contextPath }/on/removeFilmCategory?filmId=${f.filmId}&categoryId=${f.categoryId}">삭제</a><!-- film_actor에서도 삭제  -->
+					<c:if test="${status.count % 5 == 0}">
+						<br>
+					</c:if>
+					
+				</c:forEach>
+				</div>
+			</div>
+			
+			<div>
+				<p class="h3">ACTOR</p>
+				<div>
+					<form action="get">
+						<input type="text" name="searchName">
+						<button type="button" class="btn btn-sm btn-dark" id="">SEARCH</button>
+					</form>
+				</div>
+				<div>
+					<form action="post" id="">
+						<select name="actorId">
+							<option value="">ACTOR</option>
+							<option value="${ㅁ}">${ㅁ}</option>
+						</select>
+					
+						<button type="button" class="btn btn-sm btn-dark" id="">ADD ACTOR</button>
+					</form>
+				</div>
+			</div>
+			
 			
 
 			<div class="col-sm-6"><!-- actor -->
@@ -143,7 +197,7 @@
 					<tr>
 						<th>NUM</th>
 						<th>NAME</th>
-						<th>LAST UPDATE</th>
+						<th>삭제</th>
 					</tr>
 					
 					<c:forEach var="a" items="${actorList }" varStatus="status">
@@ -152,7 +206,7 @@
 							<td><a href="${pageContext.request.contextPath}/on/actorOne?actorId=${a.actorId}" class="name">
 								${a.firstName} ${a.lastName }</a>
 							</td>
-							<td>${a.lastUpdate == null ? "*NONE" : a.lastUpdate}</td>
+							<td><a href="${pageContext.request.contextPath }/on/removeFilmActor?filmId=${f.filmId}&actorId=${actor.actorId}">삭제</a></td>
 						</tr>
 					</c:forEach>
 					

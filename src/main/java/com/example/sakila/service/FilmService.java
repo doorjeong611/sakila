@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.sakila.mapper.FilmActorMapper;
+import com.example.sakila.mapper.FilmCategoryMapper;
 import com.example.sakila.mapper.FilmMapper;
 import com.example.sakila.vo.Actor;
 import com.example.sakila.vo.Film;
@@ -22,6 +24,8 @@ import lombok.extern.slf4j.Slf4j;
 public class FilmService {
 	
 	@Autowired FilmMapper filmMapper;
+	@Autowired FilmActorMapper filmActorMapper;
+	@Autowired FilmCategoryMapper filmCategoryMapper;
 	
 	// /on/actorOne
 	public List<Film> getFilmTitleListByActor(int actorId) {
@@ -158,6 +162,65 @@ public class FilmService {
 		}
 
 		return filmMapper.insertLanguage(name);
+	}
+	
+	// on/removeFilm
+	public void removeFilmByKey(Integer filmId) {
+		log.debug("[FilmService - removeFilmByKey]");
+		
+		// 필름_카테고리 삭제
+		filmCategoryMapper.deleteFilmCategoryByFilm(filmId);
+		// 필름_배우 삭제
+		filmActorMapper.deleteFilmActorByFilm(filmId);
+		// 필름 삭제
+		filmMapper.deleteFilmByKey(filmId);
+		
+		
+	}
+	
+	// on/modifyFilm
+	public void modifyFilm(FilmForm filmForm, Integer filmId) {
+		log.debug("[FilmService - modifyFilm]");
+		log.debug("filmId : " + filmId);
+		Film film = new Film();
+		
+		// FilmForm -> Film 변환
+		film.setTitle(filmForm.getTitle());
+		film.setDescription(filmForm.getDescription().equals("") ? null : filmForm.getDescription());
+		film.setReleaseYear(filmForm.getReleaseYear());
+		film.setLanguageId(filmForm.getLanguageId());
+		film.setOriginalLanguageId(filmForm.getOriginalLanguageId());
+		film.setRentalDuration(filmForm.getRentalDuration());
+		film.setRentalRate(filmForm.getRentalRate());
+		film.setLength(filmForm.getLength());
+		film.setReplacementCost(filmForm.getReplacementCost());
+		film.setRating(filmForm.getRating());
+		
+		// specialFeatures 배열 -> ,문자열
+		String specialFeatures = "";
+		if(filmForm.getSpecialFeatures() == null) {
+			film.setSpecialFeatures(null);
+		}else {
+			for(int i=0; i<filmForm.getSpecialFeatures().size(); i++) {
+				
+				
+				if(i == filmForm.getSpecialFeatures().size()-1) {
+					specialFeatures += filmForm.getSpecialFeatures().get(i);
+				}else {
+					specialFeatures += filmForm.getSpecialFeatures().get(i) + ",";
+				}
+			}
+			
+			film.setSpecialFeatures(specialFeatures);
+		}
+		
+		film.setFilmId(filmId);
+		
+		log.debug("specialFeatures : "+ specialFeatures);
+		log.debug("LanguageId : "+ filmForm.getLanguageId());
+		
+		filmMapper.updateFilm(film);
+		
 	}
 	
 	

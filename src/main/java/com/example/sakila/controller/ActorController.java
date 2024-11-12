@@ -107,6 +107,7 @@ public class ActorController {
 	@GetMapping("/on/actorOne")
 	public String actorOne(@RequestParam int actorId, @RequestParam(defaultValue = "") String searchTitle,Model model) {
 		log.debug("[GET - actorOne ]");
+		log.debug("searchTitle : " + searchTitle);
 		
 		// searchWord = ""이라면 actorOne 요청, ""이 아니라면 film검색 요청임.
 		
@@ -121,6 +122,7 @@ public class ActorController {
 		if(!searchTitle.equals("")) {
 			// film검색결과 리스트를 추가.
 			List<Film> searchFilmList =  filmService.getFilmListByTitle(searchTitle);
+			log.debug("searchTitle : " + searchTitle);
 			model.addAttribute("searchFilmList", searchFilmList);
 		}
 		
