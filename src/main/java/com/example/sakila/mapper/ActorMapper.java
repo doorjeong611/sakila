@@ -13,7 +13,7 @@ public interface ActorMapper {
 	
 	int insertActor(Actor actor);
 	
-	// actorList
+	// on/actorList
 	List<Actor> selectActorList(Map<String, Object> map);
 	
 	// actorList
@@ -33,6 +33,7 @@ public interface ActorMapper {
 	// on/deleteActor
 	int deleteActor(int actorId); 
 	
-	
+	// on/filmOne : actor 검색 -> 추가 를 위한 검색기능. 
+	List<Actor> selectActorListBySearch(String searchName);
 	
 }

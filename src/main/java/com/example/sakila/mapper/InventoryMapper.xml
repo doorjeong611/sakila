@@ -8,4 +8,31 @@
 		FROM inventory
 		WHERE film_id = #{filmId}
 	</select>
+	
+	
+	<!-- /on/inventoryList : film * rental * payment * ... * customer -->
+	<select id="selectInventroyListByStore" parameterType="Map" resultType="Map">
+		SELECT i.inventory_id inventoryId
+			  , i.film_id filmId
+			  , f.title title
+			  , i.last_update lastUpdate
+		FROM inventory i INNER JOIN film f
+		ON i.film_id = f.film_id
+		WHERE i.store_id = #{storeId}	
+		ORDER BY i.inventory_id DESC
+		LIMIT #{beginRow} , #{rowPerPage}	
+	</select>
+	
+	<!-- /on/inventoryList : page -->
+	<select id="selectTotalCountByInventoryList">
+		SELECT COUNT(*)
+		FROM inventory i INNER JOIN film f
+		ON i.film_id = f.film_id
+		WHERE i.store_id = #{storeId}
+	</select>
+	
+	
+	
+	
+	
 </mapper>

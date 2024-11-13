@@ -57,7 +57,10 @@
                            
                             </li>
 							<li>
-                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">상점 리스트</span> </a>
+                                <a href="${pageContext.request.contextPath }/on/storeList" class="nav-link px-0"> <span class="d-none d-sm-inline">상점 리스트</span> </a>
+                            </li>
+							<li>
+                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">ADD INVENTORY</span> </a>
                             </li>
                         </ul>
                     </li>

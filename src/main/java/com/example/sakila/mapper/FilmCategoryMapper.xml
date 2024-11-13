@@ -26,4 +26,21 @@
 		WHERE fc.film_id = #{filmId}
 	</select>
 
+	<!-- on/filmOne에서 category 추가하기 : /on/addFilmCategory -->
+	<insert id="insertFilmCategory" parameterType="com.example.sakila.vo.FilmCategory">
+		INSERT INTO film_category(film_id, category_id)
+		VALUES( #{filmId}, #{categoryId})
+	
+	</insert>
+
+	<!-- on/filmOne에서 category 삭제하기 : /on/removeFilmCategory -->
+	<delete id="deleteFilmCateogory" parameterType="com.example.sakila.vo.FilmCategory">
+		DELETE 
+		FROM film_category
+		WHERE film_id = #{filmId}
+		and category_id = #{categoryId}
+	</delete>
+
+
+
 </mapper>

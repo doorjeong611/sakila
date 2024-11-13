@@ -17,13 +17,15 @@ public class StoreService {
 	@Autowired StoreMapper storeMapper;
 	
 	// on/addStaff : addStaff.jsp에서 storeList 출력 후 선택
-	// on/storeList : storeList.jsp에서 storeList 출력
 	public List<Map<String , Object>> getStoreList(){
 		
 		return storeMapper.selectStoreList();
 	}
 	
-	
-	
+	// on/storeList : storeList.jsp에서 storeList 출력
+	public List<Map<String , Object>> getStoreListByAll(){
+		
+		return storeMapper.selectStoreListByAll();
+	}
 	
 }

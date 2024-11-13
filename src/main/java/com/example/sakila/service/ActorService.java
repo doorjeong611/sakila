@@ -181,14 +181,14 @@ public class ActorService {
 				f.delete();
 				
 			}
-		}
-		
-		
-		
-		
+		}		
 	}
 	
-	
+	// on/filmOne : actor 검색 -> 추가 를 위한 검색기능. 
+	public List<Actor> getActorListBySearch(String searchName){
+		
+		return actorMapper.selectActorListBySearch(searchName);
+	}
 	
 	
 }

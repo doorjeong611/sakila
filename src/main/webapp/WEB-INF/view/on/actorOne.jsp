@@ -169,7 +169,7 @@
 					<button type="button" class="btn btn-sm btn-dark" id="btnSearchFilm" >SEARCH FILM</button>
 
 				</form>
-				<form action="${pageContext.request.contextPath}/on/addFilmByActor" method="post" id="formAddFilm">
+				<form action="${pageContext.request.contextPath}/on/addFilmActorByActor" method="post" id="formAddFilm">
 					<input type="hidden" name="actorId" value="${actor.actorId}">
 					<select size="5" name="filmId">
 						<c:forEach var="sfl" items="${searchFilmList }">

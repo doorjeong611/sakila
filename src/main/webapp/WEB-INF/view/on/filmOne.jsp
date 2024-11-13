@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>    
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>    
     
 <!DOCTYPE html>
 <html>
@@ -36,6 +37,36 @@
 
 <script>
 	$(document).ready(function(){ // <body>까지 메모리에 올라간 후 script 실행.
+		
+		$('#btnFilmCategory').click(function() { // category 버튼 클릭시
+			if($('#categoryId').val() == ''){
+				alert('CATEGORY를 선택하세요');
+				return;
+			}
+			
+			$('#formFilmCategory').submit();
+		
+		})
+		
+		$('#btnSearchName').click(function() { // category 버튼 클릭시
+			if($('#searchName').val() == ''){
+				alert('검색어를 입력하세요');
+				return;
+			}
+			
+			$('#formSearchName').submit();
+		
+		})
+		
+		$('#btnAddActor').click(function() { // category 버튼 클릭시
+			if($('#actorId').val() == null || $('#actorId').val() == ''){
+				alert('배우를 선택하세요');
+				return;
+			}			
+		
+			$('#formAddActor').submit();
+		
+		})
 		
 		
 		
@@ -91,7 +122,7 @@
 					</tr>
 					<tr>
 						<th>RELEASE YEAR</th>
-						<td>${film.releaseYear }</td>
+						<td>${fn:substring(film.releaseYear,0,4)}</td>
 					</tr>
 					<tr>
 						<th>RENTAL DURATION</th>
@@ -139,10 +170,11 @@
 				
 			</div>
 			
-			<div><!-- CATEGORY -->
+			<div><!-- CATEGORY : ⭐⭐⭐ 동일한 category 추가하지 못하도록 처리하기. -->
 				<p class="h3">CATEGORY</p>
 				<div>
-					<form action="post" id="">
+					<form action="${pageContext.request.contextPath }/on/addFilmCategory" method="post" id="formFilmCategory" >
+					<input type="hidden" name="filmId" value="${film.filmId}">
 						<select name="categoryId">
 							<option value="">CATEGORY</option>
 							<c:forEach var="ac" items="${allCategoryList }">
@@ -150,12 +182,11 @@
 							</c:forEach>
 						</select>
 					
-						<button type="button" class="btn btn-sm btn-dark" id="">ADD CATEGORY</button>
+						<button type="button" class="btn btn-sm btn-dark" id="btnFilmCategory">ADD CATEGORY</button>
 					</form>
 				</div>
 				
 				<div><!-- 해당 FILM의 CATEGORY 출력 -->
-					<p class="h3">FILMOGRAPHY</p>
 
 					<c:forEach var="f" items="${filmCategoryList }" varStatus="status">
 					
@@ -169,22 +200,28 @@
 				</div>
 			</div>
 			
-			<div>
-				<p class="h3">ACTOR</p>
-				<div>
-					<form action="get">
+			<div><!-- 출연 배우 추가(검색) -->
+				<p class="h3">ACTOR</p> 
+				
+				<div> <!-- 출연배우 추가를 위한 검색 -->
+					<form action="${pageContext.request.contextPath }/on/filmOne" method="get" id="formSearchName">
+						<input type="hidden" name = "filmId" value="${film.filmId }"> 
 						<input type="text" name="searchName">
-						<button type="button" class="btn btn-sm btn-dark" id="">SEARCH</button>
+						<button type="button" class="btn btn-sm btn-dark" id="btnSearchName">SEARCH</button>
 					</form>
 				</div>
-				<div>
-					<form action="post" id="">
-						<select name="actorId">
+				
+				<div> <!-- 출연배우 추가 ⭐⭐⭐⭐ 동일 배우 추가시 발생하는 오류 처리하기 -->
+					<form action="${pageContext.request.contextPath }/on/addFilmActorByFilm" method="post" id="formAddActor">
+						<input type="hidden" name="filmId" value="${film.filmId }">
+						<select name="actorId" size="5" id="actorId" >
 							<option value="">ACTOR</option>
-							<option value="${ㅁ}">${ㅁ}</option>
+							<c:forEach var="s" items="${searchActorList }">
+								<option value="${s.actorId}">${s.firstName} ${s.lastName}</option>
+							</c:forEach>
 						</select>
 					
-						<button type="button" class="btn btn-sm btn-dark" id="">ADD ACTOR</button>
+						<button type="button" class="btn btn-sm btn-dark" id="btnAddActor">ADD ACTOR</button>
 					</form>
 				</div>
 			</div>
@@ -201,12 +238,13 @@
 					</tr>
 					
 					<c:forEach var="a" items="${actorList }" varStatus="status">
+							<input type="hidden" name="actorId" value="${a.actorId }" id="nowActorId">
 						<tr>
 							<td>${status.count}</td>
 							<td><a href="${pageContext.request.contextPath}/on/actorOne?actorId=${a.actorId}" class="name">
 								${a.firstName} ${a.lastName }</a>
 							</td>
-							<td><a href="${pageContext.request.contextPath }/on/removeFilmActor?filmId=${f.filmId}&actorId=${actor.actorId}">삭제</a></td>
+							<td><a href="${pageContext.request.contextPath }/on/removeFilmActorByFilm?filmId=${film.filmId}&actorId=${a.actorId}">삭제</a></td>
 						</tr>
 					</c:forEach>
 					

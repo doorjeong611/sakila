@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.sakila.mapper.FilmCategoryMapper;
+import com.example.sakila.vo.FilmCategory;
 
 @Service
 @Transactional
@@ -19,6 +20,18 @@ public class FilmCategoryService {
 	public List<Map< String, Object>> getFilmCategoryListByFilm(int filmId){
 		
 		return filmCategoryMapper.selectFilmCategoryListByFilm(filmId);
+	}
+	
+	
+	// on/filmOne에서 category 추가하기 : /on/addFilmCategory
+	public Integer addFilmCategory(FilmCategory filmCategory) {
+		
+		return filmCategoryMapper.insertFilmCategory(filmCategory);
+	}
+	
+	// on/filmOne에서 category 삭제하기 : /on/removeFilmCategory
+	public Integer removeFilmCategory(FilmCategory filmCategory) {
+		return filmCategoryMapper.deleteFilmCateogory(filmCategory);
 	}
 	
 	

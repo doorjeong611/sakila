@@ -13,5 +13,8 @@ public interface StoreMapper {
 	// addStaff 지점 리스트
 	List<Map<String, Object>>selectStoreList();
 	
+	// on/storeList : storeList 
+	List<Map<String, Object>>selectStoreListByAll();
+	
 	
 }

@@ -12,9 +12,9 @@ public class Film {
 	private Integer languageId;			// FK
 	private Integer originalLanguageId;	// FK
 	private Integer rentalDuration;
-	private double rentalRate;
+	private Double rentalRate;
 	private Integer length;				// 기본값 : null int의 기본값은 0이기 때문에 Integer로 받음(null)받기 위해
-	private double replacementCost;
+	private Double replacementCost;
 	private String rating;
 	private String specialFeatures;	// 기본값 : null
 	private String lastUpdate;

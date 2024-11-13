@@ -40,7 +40,7 @@ public class FilmController {
 	
 	// on/filmOne
 	@GetMapping("/on/filmOne")
-	public String filmOne(Model model, @RequestParam int filmId, @RequestParam(required = false) String searchName ) {
+	public String filmOne(Model model, @RequestParam Integer filmId, @RequestParam(required = false) String searchName ) {
 		log.debug("[GET - filmOne]");
 		
 		/** [출력 정보]
@@ -61,6 +61,13 @@ public class FilmController {
 		
 		// 3) 해당 film의 category
 		List<Map<String, Object>> filmCategoryList = filmCategoryService.getFilmCategoryListByFilm(filmId);
+		
+		// 4) actor 검색(searchName) -> 검색어 관련 actorList
+		if(searchName != null || searchName != "") { // 배우이름검색 버튼을 통해 요청이 들어온다면
+			List<Actor> searchActorList = actorService.getActorListBySearch(searchName);
+			
+			model.addAttribute("searchActorList", searchActorList);
+		}
 		
 		
 		// 5) 해당 film의 출연 actorList 

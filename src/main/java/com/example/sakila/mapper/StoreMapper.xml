@@ -2,11 +2,31 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.sakila.mapper.StoreMapper">
 
+	<!-- addStaff : 지점 리스트 -->
 	<select id="selectStoreList" resultType="map">
 		SELECT s.store_id storeId
 			   , a.address address
 		FROM store s INNER JOIN address a
 		ON s.address_id = a.address_id;	
+	</select>
+
+
+	<!-- on/storeList : storeList  -->
+	<select id="selectStoreListByAll" resultType="map">
+		SELECT t.store_id storeId
+			, t.manager_staff_id managerStaffId
+			, t.address address
+			, s.first_name firstName
+			, s.last_name lastName
+			, s.staff_id staffId
+			, s.role role
+			, s.active active
+		FROM staff s INNER JOIN (SELECT s.store_id store_id
+											   , a.address address
+											   , s.manager_staff_id manager_staff_id
+										FROM store s INNER JOIN address a
+										ON s.address_id = a.address_id)t
+		ON s.staff_id = t.manager_staff_id
 	</select>
 
 </mapper>
