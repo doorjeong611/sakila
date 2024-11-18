@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.sakila.mapper.InventoryMapper;
+import com.example.sakila.vo.Inventory;
 
 @Service
 public class InventoryService {
@@ -49,5 +50,17 @@ public class InventoryService {
 		return lastPage;
 	}
 	
+	
+	// on/addInventroy
+	public Integer addInventory(Inventory inventory) {
+		
+		return inventoryMapper.insertInventory(inventory);
+		
+	}
+	
+	// on/removeInventoryByKey 
+	public Integer removeInventoryByKey(int inventoryId) {
+		return inventoryMapper.deleteInventoryByKey(inventoryId);
+	}
 	
 }

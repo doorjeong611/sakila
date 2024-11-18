@@ -31,8 +31,16 @@
 		WHERE i.store_id = #{storeId}
 	</select>
 	
+	<!-- on/addInventroy -->
+	<insert id="insertInventory" parameterType="com.example.sakila.vo.Inventory">
+		INSERT INTO inventory(film_id, store_id)
+		VALUES(#{filmId}, #{storeId} )
+	</insert>
 	
-	
-	
+	<!-- on/removeInventoryByKey -->
+	<delete id="deleteInventoryByKey" parameterType="Integer">
+		DELETE FROM inventory
+		WHERE inventory_id = #{inventoryId}
+	</delete>
 	
 </mapper>

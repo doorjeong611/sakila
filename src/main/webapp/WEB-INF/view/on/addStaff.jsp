@@ -135,7 +135,7 @@
 			
 				<p class="display-5 mt-3 pt-3">ADD STAFF</p>
 				
-				<div class="mt-5 mb-4">
+				<div class="mt-5 mb-4"><!-- 주소 검색 -->
 					<p class="h4">주소 검색</p>
 					
 					<form action="${pageContext.request.contextPath }/on/addStaff" method="get" id="formAddress">

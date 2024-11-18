@@ -56,15 +56,21 @@
 						<th>TITLE</th>
 						<th>FILM ID</th>
 						<th>LAST UPDATE</th>
+						<th>DELETE</th>
 					</tr>
 					<c:set var="startIndex" value="${(currentPage - 1) * rowPerPage}" />
 					<c:forEach var="i" items="${inventoryList}" varStatus="status">
 						<tr>
 							<td>${startIndex + status.count }</td>
 							<td>${i.inventoryId }</td>
-							<td>${i.title }</td>
+							<td><a href="${pageContext.request.contextPath }/on/filmOne?filmId=${i.filmId}">${i.title }</a></td>
 							<td>${i.filmId }</td>
 							<td>${i.lastUpdate }</td>
+							<td>	
+								<a href="${pageContext.request.contextPath }/on/removeInventoryByKey?inventoryId=${i.inventoryId}&storeId=${storeId}">
+									<button type="button" class="btn btn-sm btn-dark">DELETE</button>
+								</a>
+							</td>
 						</tr>
 					</c:forEach>
 				</table>

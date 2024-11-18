@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.example.sakila.vo.Inventory;
+
 @Mapper
 public interface InventoryMapper {
 
@@ -16,5 +18,12 @@ public interface InventoryMapper {
 	
 	// on/inventoryList : page
 	Integer selectTotalCountByInventoryList(Integer storeId);
+	
+	// on/addInventroy
+	Integer insertInventory(Inventory inventory);
+	
+	// on/removeInventoryByKey
+	Integer deleteInventoryByKey(int inventoryId);
+	
 	
 }

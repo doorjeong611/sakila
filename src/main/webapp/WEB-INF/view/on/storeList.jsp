@@ -60,7 +60,7 @@
 		<div class="col-sm-10">
 			<p class="display-4">STORE LIST</p>
 			
-			<div class="col-lg-7"><!-- table -->
+			<div class="col-lg-8"><!-- table -->
 				<table class="table text-center">
 					<tr>
 						<th>STORE ID</th>
@@ -69,8 +69,9 @@
 						<th>STAFF ID</th>
 						<th>ROLE</th>
 						<th>ACTIVE</th>
-						<th>INVENTORY</th>
 						<th>MODIFY</th>
+						<th>INVENTORY</th>
+						<th>ADD INVENT..</th>
 					</tr>
 					<c:forEach var="s" items="${storeList }">
 						<tr>
@@ -87,12 +88,17 @@
 							</c:if>	
 							<td>
 								<a href="${pageContext.request.contextPath }/on/inventoryList?storeId=${s.storeId}">
-									<button type="button" class="btn btn-sm btn-dark">INVENTORY</button>
+									<button type="button" class="btn btn-sm btn-dark">MODIFY</button>
 								</a>
 							</td>
 							<td>
 								<a href="${pageContext.request.contextPath }/on/inventoryList?storeId=${s.storeId}">
-									<button type="button" class="btn btn-sm btn-dark">MODIFY</button>
+									<button type="button" class="btn btn-sm btn-dark">INVENTORY</button>
+								</a>
+							</td>
+							<td>
+								<a href="${pageContext.request.contextPath }/on/addInventory?storeId=${s.storeId}">
+									<button type="button" class="btn btn-sm btn-dark">ADD INVENT..</button>
 								</a>
 							</td>
 							

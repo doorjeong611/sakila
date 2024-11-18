@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.sakila.mapper.CustomerMapper">
+	
+	<!-- /on/addCustomer -->
+	<insert id="insertCustomer" parameterType="com.example.sakila.vo.Customer">
+		INSERT INTO customer(store_id, first_name, last_name, email, address_id)
+		VALUES (#{storeId}, #{firstName}, #{lastName}, #{email}, #{addressId} )	
+	</insert>
+	
+	<!-- on/customerList -->
+	<select id="selectCustomerList" parameterType="map" resultType="map">
+		SELECT c.customer_id customerId
+				, c.store_id storeId
+				, c.first_name firstName
+				, c.last_name lastName
+				, c.active active
+				, c.address_id addressId
+				, a.district district
+		FROM customer c INNER JOIN address a
+		ON c.address_id = a.address_id
+		<where>
+			<if test="searchCustomer != null">
+				c.first_name LIKE CONCAT( '%', #{searchCustomer} ,'%' )
+				OR
+				c.last_name LIKE CONCAT( '%', #{searchCustomer} ,'%' )
+			</if>
+		</where>
+		ORDER BY customer_id DESC
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+	
+	<!-- on/customerList : 마지막 페이지 -->
+	<select id="selectTotalCustomer">
+		SELECT count(*)
+		FROM customer c INNER JOIN address a
+		ON c.address_id = a.address_id
+	</select>
+	
+	
+	
+</mapper>
