@@ -72,5 +72,54 @@ public class CustomerService {
 		return lastPage ;
 	}
 	
+	// on/addRental : 고객 검색
+	public List<Map<String, Object>> getCustomerListBySearchCustomer(String searchCustomer){
+		
+		List<Map<String, Object>> customerList = customerMapper.selectCustomerListBySearchCustomer(searchCustomer);
+	
+		return customerList;
+	}
+	
+	
+	// on/customerOne : 회원의 개인정보 
+	public Map<String, Object> getCustomerOneCutomerInfo(Integer customerId){
+		
+		Map<String, Object> customerOne = customerMapper.selectCustomerOneCustomerInfo(customerId);
+		
+		return customerOne;
+	}
+	
+	// on/customerOne : 회원의 대여이력
+	public List<Map<String, Object>> getCustomerOneCustomerRentalInfo(Integer customerId, Integer currentPage, Integer rowPerPage){
+		
+		Integer beginRow = (currentPage - 1) * rowPerPage;
+		
+		Map<String , Object> map = new HashMap<>();
+		
+		map.put("customerId", customerId);
+		map.put("beginRow", beginRow);
+		map.put("rowPerPage", rowPerPage);
+		
+		List<Map<String, Object>> rentalInfo = customerMapper.selectCustomerOneCustomerRentalInfo(map);
+		
+		return rentalInfo;
+	}
+	
+	// on/customerOne : 회원의 대여이력 pagination을 위한 lastPage 구하기
+	public Integer getRentalInfoTotal(Integer customerId, Integer rowPerPage) {
+		
+		Integer total = customerMapper.selectRentalInfoTotal(customerId);
+		
+		Integer lastPage = total / rowPerPage;
+		
+		if(total % rowPerPage != 0) {
+			lastPage++;
+		}
+		
+		return lastPage;
+	}
+	
+	
+	
 	
 }

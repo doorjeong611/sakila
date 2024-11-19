@@ -48,6 +48,11 @@
 		<div class="col-sm-10">
 			<p class="display-4">${storeId }'s inventory list</p>
 			
+			<div> <!-- 검색 기능 -->
+				<input type="text" name="searchTitle">
+				<button type="button" class="btn btn-sm btn-dark">SEARCH</button>
+			</div>
+			
 			<div><!-- table -->
 				<table class="table">
 					<tr>
@@ -55,6 +60,8 @@
 						<th>INVENTORY ID</th>
 						<th>TITLE</th>
 						<th>FILM ID</th>
+						<th>RENTAL</th>
+						<th>RENTAL USER</th>
 						<th>LAST UPDATE</th>
 						<th>DELETE</th>
 					</tr>
@@ -65,6 +72,15 @@
 							<td>${i.inventoryId }</td>
 							<td><a href="${pageContext.request.contextPath }/on/filmOne?filmId=${i.filmId}">${i.title }</a></td>
 							<td>${i.filmId }</td>
+							<td>${i.rentalDate }</td>
+							<td>
+								<c:if test="${i.customerId  != null}">
+									<a href="${pageContext.request.contextPath }/on/customerOne?customerId=${i.customerId}">${i.customerId }</a>
+								</c:if>
+								<c:if test="${i.customerId == null}">
+									<a href="${pageContext.request.contextPath }/on/addRental?inventoryId=${i.inventoryId}"><button type="button" class="btn btn-sm btn-dark">RENT</button></a>
+								</c:if>
+							</td>
 							<td>${i.lastUpdate }</td>
 							<td>	
 								<a href="${pageContext.request.contextPath }/on/removeInventoryByKey?inventoryId=${i.inventoryId}&storeId=${storeId}">

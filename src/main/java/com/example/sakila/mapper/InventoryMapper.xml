@@ -12,14 +12,31 @@
 	
 	<!-- /on/inventoryList : film * rental * payment * ... * customer -->
 	<select id="selectInventroyListByStore" parameterType="Map" resultType="Map">
-		SELECT i.inventory_id inventoryId
-			  , i.film_id filmId
-			  , f.title title
-			  , i.last_update lastUpdate
-		FROM inventory i INNER JOIN film f
-		ON i.film_id = f.film_id
-		WHERE i.store_id = #{storeId}	
-		ORDER BY i.inventory_id DESC
+		SELECT t1.inventory_id inventoryId
+				, t1.film_id filmId
+				, t1.title title
+				, t1.last_update lastUpdate
+				, t2.customer_id customerId
+				, ifnull(t2.rental_date,'대여가능') rentalDate
+		FROM 
+				(SELECT i.inventory_id 
+						  , i.film_id 
+						  , f.title 
+						  , i.last_update 
+						  , i.store_id 
+				FROM inventory i INNER JOIN film f
+				ON i.film_id = f.film_id)t1
+		LEFT OUTER JOIN 
+				(SELECT i.inventory_id, t.customer_id , t.rental_date
+				FROM inventory i LEFT OUTER JOIN (SELECT inventory_id
+														, customer_id 
+														, rental_date
+												 FROM rental
+												 WHERE return_date IS NULL)t
+				ON i.inventory_id = t.inventory_id)t2
+		ON t1.inventory_id = t2.inventory_id
+		WHERE t1.store_id = #{storeId}	
+		ORDER BY t1.inventory_id DESC
 		LIMIT #{beginRow} , #{rowPerPage}	
 	</select>
 	

@@ -33,7 +33,7 @@
 		})
 		
 		// FILM 선택
-		$('#btnAddFILM').click(function() {
+		$('#btnSelFILM').click(function() {
 			
 			if($('#selFilmId').val() == null || $('#selFilmId').val() == ''){
 				alert('FILM을 선택하세요.');
@@ -43,7 +43,7 @@
 				$('#filmId').val($('#selFilmId').val());
 				$('#filmTitle').val(selectedFilmTitle);
 				console.log($('#filmId').val());
-
+				return;
 			}
 		})
 		
@@ -99,7 +99,7 @@
 							</c:forEach>
 						</select>
 					
-						<button type="button" class="btn btn-sm btn-dark" id="btnAddFILM">ADD FILM</button>
+						<button type="button" class="btn btn-sm btn-dark" id="btnSelFILM">ADD FILM</button>
 					</form>
 				</div>
 			</div>

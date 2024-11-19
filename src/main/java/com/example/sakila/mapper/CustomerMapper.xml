@@ -17,6 +17,8 @@
 				, c.active active
 				, c.address_id addressId
 				, a.district district
+				, a.address address
+				, c.email
 		FROM customer c INNER JOIN address a
 		ON c.address_id = a.address_id
 		<where>
@@ -27,7 +29,8 @@
 			</if>
 		</where>
 		ORDER BY customer_id DESC
-		LIMIT #{beginRow}, #{rowPerPage}
+        LIMIT #{beginRow}, #{rowPerPage}
+
 	</select>
 	
 	<!-- on/customerList : 마지막 페이지 -->
@@ -38,5 +41,107 @@
 	</select>
 	
 	
+	<!-- /on/addRental : 고객 검색 -->
+	<select id="selectCustomerListBySearchCustomer" parameterType="String" resultType="map">
+		SELECT c.customer_id customerId
+				, c.store_id storeId
+				, c.first_name firstName
+				, c.last_name lastName
+				, c.active active
+				, c.address_id addressId
+				, a.district district
+				, a.address address
+				, c.email email
+				, a.phone phone
+		FROM customer c INNER JOIN address a
+		ON c.address_id = a.address_id
+		<where>
+			<if test="searchCustomer != null">
+				c.first_name LIKE CONCAT( '%', #{searchCustomer} ,'%' )
+				OR
+				c.last_name LIKE CONCAT( '%', #{searchCustomer} ,'%' )
+			</if>
+		</where>
+		ORDER BY customer_id DESC
+	</select>
+	
+	<!-- customerOne : 회원의 개인정보 -->
+	<select id="selectCustomerOneCustomerInfo" parameterType="Integer" resultType="map">
+		SELECT distinct c.customer_id customerId
+				, c.store_id storeId
+				, c.first_name firstName
+				, c.last_name lastName
+				, c.email email
+				, c.active active
+				, c.address_id addressId
+				, ac.address address
+				, ac.address2 address2
+				, ac.district district
+				, ac.phone phone
+				, ac.city city
+				, ac.country country
+		FROM customer c INNER JOIN (SELECT a.address_id
+											, a.address
+											, a.address2
+											, a.district
+											, a.phone
+											, cc.city
+											, cc.country
+									FROM address a INNER JOIN (SELECT c.city_id
+																		, c.city
+																		, c.country_id
+																		, ct.country
+																FROM city c INNER JOIN (SELECT c.city_id 
+																								, c.city 
+																								, c.country_id 
+														 										, cn.country 
+																						FROM city c INNER JOIN country cn
+																						ON c.country_id = cn.country_id) ct
+																ON c.country_id = ct.country_id) cc
+									ON a.city_id = cc.city_id)ac
+		ON c.address_id = ac.address_id 
+		WHERE customer_id = #{customerId}
+	</select>
+	
+	<!-- on/customerOne : 회원의 대여이력 -->
+	<select id="selectCustomerOneCustomerRentalInfo" parameterType="map" resultType="map">
+		SELECT r.rental_id rentalId
+				, r.inventory_id inventoryId
+				, r.customer_id customerId
+				, r.rental_date rentalDate
+				, r.return_date returnDate
+				, t.film_id filmId
+				, t.store_id storeId
+				, t.title title
+				, t.rental_duration rentalDuration
+				, t.rental_rate rentalRate
+		FROM rental r INNER JOIN (SELECT i.inventory_id
+										, i.film_id
+										, i.store_id 
+										, f.title
+										, f.rental_duration
+										, f.rental_rate
+								FROM inventory i INNER JOIN film f
+								ON i.film_id = f.film_id)t
+		ON r.inventory_id = t.inventory_id
+		WHERE r.customer_id = #{customerId}
+		ORDER BY 4 DESC
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+	
+	<!-- on/customerOne : 회원의 대여이력 -pagination을 위한 lastPage -->
+	<select id="selectRentalInfoTotal" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(*)
+		FROM rental r INNER JOIN (SELECT i.inventory_id
+													, i.film_id
+													, i.store_id 
+													, f.title
+													, f.rental_duration
+													, f.rental_rate
+											FROM inventory i INNER JOIN film f
+											ON i.film_id = f.film_id)t
+		ON r.inventory_id = 	t.inventory_id
+		WHERE r.customer_id = #{customerId}
+	</select>
 	
 </mapper>

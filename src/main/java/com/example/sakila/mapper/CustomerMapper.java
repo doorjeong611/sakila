@@ -19,4 +19,21 @@ public interface CustomerMapper {
 	// on/customerList : 마지막 페이지
 	Integer selectTotalCustomer(Integer rowPerPage);
 	
+	
+	// on/addRental : 고객 검색
+	List<Map<String, Object>> selectCustomerListBySearchCustomer(String searchCustomer);
+	
+	// on/customerOne : 회원의 개인정보
+	Map<String, Object> selectCustomerOneCustomerInfo(Integer customerId);
+	
+	// on/customerOne : 회원의 대여이력
+	List<Map<String, Object>> selectCustomerOneCustomerRentalInfo(Map<String, Object> map);
+	
+	// on/customerOne : 회원의 대여이력 pagination을 위한 lastPage 구하기
+	Integer selectRentalInfoTotal(Integer customerId);
+	
+	
+	
+	
+	
 }

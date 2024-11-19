@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.sakila.service.AddressService;
 import com.example.sakila.service.CustomerService;
 import com.example.sakila.service.StoreService;
+import com.example.sakila.util.TeamColor;
 import com.example.sakila.vo.Address;
 import com.example.sakila.vo.Customer;
 import com.example.sakila.vo.Store;
@@ -83,6 +84,39 @@ public class CustomerController {
 		
 		return "on/customerList";
 	}
+	
+	// /on/customerOne
+	@GetMapping("/on/customerOne")
+	public String customerOne(@RequestParam Integer customerId, @RequestParam(defaultValue = "1") Integer currentPage,
+								@RequestParam(defaultValue = "5") Integer rowPerPage, Model model) {
+		log.debug("[ Get - customerOne ]");
+		
+		log.debug(TeamColor.BLUE+ "customerId : " + customerId + TeamColor.RESET);
+		log.debug(TeamColor.BLUE+ "currentPage : " + currentPage + TeamColor.RESET);
+		log.debug(TeamColor.BLUE+ "rowPerPage : " + rowPerPage + TeamColor.RESET);
+		
+		// 회원의 개인정보
+		Map<String, Object> customerOne = customerService.getCustomerOneCutomerInfo(customerId);
+		log.debug(TeamColor.BLUE+ "customerOne : " + customerOne.toString() + TeamColor.RESET);
+		
+		// 회원이 대여이력
+		List<Map<String, Object>> rentalInfo = customerService.getCustomerOneCustomerRentalInfo(customerId, currentPage, rowPerPage);
+		log.debug(TeamColor.BLUE+ "rentalInfo : " + rentalInfo.toString() + TeamColor.RESET);
+		
+		// pagination을 위한 lastPage
+		Integer lastPage = customerService.getRentalInfoTotal(customerId, rowPerPage);
+		
+		model.addAttribute("customerOne", customerOne);
+		model.addAttribute("rentalInfo", rentalInfo);
+		
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("rowPerPage", rowPerPage);
+		model.addAttribute("lastPage", lastPage);
+		
+		return "/on/customerOne";
+	}
+	
+	
 	
 	
 }
